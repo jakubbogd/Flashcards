@@ -46,6 +46,6 @@ onMounted(async () => {
 
 const start = async () => {
   const uuid = await smartLearnService.startSession(selected.value, count.value)
-  window.location.href = `/smart-learn/${uuid.uuid}`
+  goTo(`smart-learn/${uuid.uuid}`)
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <button class="home-btn" @click="goTo('/')">
+    <button class="home-btn" @click="goTo()">
         <svg width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor"
             d="M12 3l9 8h-3v9h-5v-6h-2v6H6v-9H3z" />

@@ -71,7 +71,6 @@ import { ref, onMounted, computed } from 'vue'
 import Toast from './Subcomponents/Toast.vue'
 import GoToMain from './Subcomponents/GoToMain.vue'
 import { smartLearnService } from '@/api/smartLearnService'
-import { goTo } from '@/helpers/helpers'
 
 const uuid = window.location.pathname.split('/').pop()
 

@@ -2,7 +2,7 @@
   <div class="container flex">
     <GoToMain/>
     <h1 class="title">📚 Nauka fiszek</h1>
-    <button class="btn blue-btn" @click="goToCreate">
+    <button class="btn blue-btn" @click="goTo(`create?chosen=${selectedSetId.value}`)">
       Przejdź do tworzenia fiszek
     </button>
     <div class="mode-select flex">
@@ -80,11 +80,6 @@ onMounted(() =>{
   selectedSetId.value = params.get('chosen')
   loadFlashcards()
 })
-
-
-const goToCreate = () => {
-  window.location.href = `/create?chosen=${selectedSetId.value}`
-}
 
 
 const modes = [

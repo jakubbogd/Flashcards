@@ -4,7 +4,7 @@
     <input class="green-border-input input-field" v-model="props.set.description"  @blur="emits('updateSet', props.set)" placeholder="Opis" />
     <p>{{ props.set.flashcards_count ?? 0 }} fiszek</p>
     <div class="buttons flex">
-      <button class="btn green-btn" @click="create()">Twórz</button>
+      <button class="btn green-btn" @click="goTo(`create?chosen=${props.set.id}`)">Twórz</button>
       <button class="btn red-btn" @click="emits('setRemoved', props.set.id)">Usuń</button>
     </div>
   </div>
@@ -15,10 +15,6 @@
 import { goTo } from '@/helpers/helpers'
 const props=defineProps({ set: Object })
 const emits=defineEmits(['setRemoved','updateSet'])
-const create = () => {
-  window.location.href = `/create?chosen=${props.set.id}`
-}
-
 
 </script>
 

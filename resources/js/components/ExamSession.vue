@@ -57,7 +57,7 @@ const submitAnswer = async (isCorrect) => {
   if (index.value + 1 < exam.value.questions.length) {
     index.value++
   } else {
-    window.location.href = `/exam/${uuid}/result`
+    goTo(`exam/${uuid}/result`)
   }
   
   if (exam.value.difficulty === 'normal') {
@@ -73,7 +73,7 @@ const startTimer = () => {
 
     if (timeLeft.value <= 0) {
       clearInterval(timer)
-      window.location.href = `/exam/${uuid}/result`
+      goTo(`exam/${uuid}/result`)
     }
   }, 1000)
 }

@@ -14,10 +14,10 @@
   <Toast :showToast="showToast" :text="exam.message" />
     <p>🔥 Streak: {{ exam.streak }} dni</p>
 
-  <button class="btn blue-btn" @click="goToHistory">
+  <button class="btn blue-btn" @click="goTo('exams')">
     📜 Historia egzaminów
     </button>
-    <button class="blue-btn btn" @click="goHome">🏠 Menu</button>
+    <button class="blue-btn btn" @click="goTo()">🏠 Menu</button>
 
 
       <div
@@ -68,15 +68,6 @@ onMounted(async () => {
   setTimeout(() => showToast.value = false, 5000)
 })
 
-
-const goToHistory = () => {
-  window.location.href = '/exams'
-}
-
-
-const goHome = () => {
-  window.location.href = '/'
-}
 </script>
 
 <style scoped>

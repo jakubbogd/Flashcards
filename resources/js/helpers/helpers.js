@@ -1,3 +1,3 @@
-export const goTo = (endpoint) => {
-    window.location.href = endpoint
+export const goTo = (endpoint="") => {
+    window.location.href = "/"+endpoint
 }

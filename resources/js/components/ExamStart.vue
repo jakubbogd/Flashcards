@@ -93,7 +93,7 @@ const startExam = async () => {
   loading.value = true
   try {
     const uuid = await examService.startExam(selectedSets.value, difficulty.value)
-    window.location.href = `/exam/${uuid.uuid}`
+    goTo(`exam/${uuid.uuid}`)
   } catch (e) {
     console.error(e)
   } finally {

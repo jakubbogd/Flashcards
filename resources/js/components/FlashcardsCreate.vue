@@ -3,7 +3,7 @@
     <GoToMain/>
     <h1>Tworzenie fiszek do zestawu {{ set.name }}</h1>
     
-    <button class="btn blue-btn" @click="goToLearn">
+    <button class="btn blue-btn" @click="goTo(`learn?chosen=${set.value.id}`)">
       Przejdź do uczenia się fiszek
     </button>
  
@@ -260,10 +260,6 @@ const openModal = (id) => {
 const closeModal = () => {
   show.value = false
   toDelete.value = 0
-}
-
-const goToLearn = () => {
-  window.location.href = `/learn?chosen=${set.value.id}`
 }
 
 const load = async () => {
