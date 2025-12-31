@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\FlashcardController;
+use App\Http\Controllers\Api\FlashcardOptionController;
 use App\Http\Controllers\Api\SetController;
 use App\Http\Controllers\Api\FlashcardImportController;
 use App\Http\Controllers\Api\FolderController;
@@ -15,8 +16,8 @@ Route::get('sets/{set}/flashcards', [FlashcardController::class, 'indexBySet']);
 Route::post('sets/{set}/flashcards', [FlashcardController::class, 'storeInSet']);
 Route::delete('flashcards/{flashcard}/image', [FlashcardController::class, 'deleteImage']);
 Route::put('flashcards/{flashcard}/image', [FlashcardController::class, 'updateImage']);
-Route::put('option/{option}', [FlashcardController::class, 'updateOption']);
-Route::post('flashcards/{flashcard}/option', [FlashcardController::class, 'addOption']);
+Route::put('option/{option}', [FlashcardOptionController::class, 'update']);
+Route::post('flashcards/{flashcard}/option', [FlashcardOptionController::class, 'store']);
 
 Route::apiResource('{set}/flashcards', FlashcardController::class);
 Route::put('flashcards/{flashcard}/learned', [FlashcardController::class, 'updateLearned']);

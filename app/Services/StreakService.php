@@ -9,8 +9,6 @@ class StreakService
     public function markToday(?\DateTimeInterface $date = null): void
     {
         $date = $date ? Carbon::parse($date)->toDateString() : now()->toDateString();
-
-        // Sprawdź, czy taki dzień już istnieje
         if (!StudyDay::where('date', $date)->exists()) {
             StudyDay::create(['date' => $date]);
         }

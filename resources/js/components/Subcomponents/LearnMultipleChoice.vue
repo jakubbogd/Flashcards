@@ -43,7 +43,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:current', 'markEasy', 'markHard','openEndModal'])
+const emit = defineEmits(['update:current', 'markEasy', 'markHard','openEndModal'])
 
 const answered = ref(false)
 const selectedOption = ref(null)
@@ -58,9 +58,9 @@ const selectOption = (option) => {
   answered.value = true
   const cardId = currentCard.value.id
   if (option.text === currentCard.value.answer && answered.value) {
-    emits('markEasy',cardId)
+    emit('markEasy',cardId)
   } else if (option.text !== currentCard.value.answer && answered.value) {
-    emits('markHard',cardId)
+    emit('markHard',cardId)
   }
 }
 
@@ -70,9 +70,9 @@ const nextCard = () => {
   setTimeout(() => {
     const newCurrent = (props.current + 1) % props.flashcards.length
     if (newCurrent === 0) {
-      emits('openEndModal',Object.values(props.easyCounts).filter(v => v > 0).length,Object.keys(props.easyCounts).filter(key => props.easyCounts[key] > 0)) 
+      emit('openEndModal',Object.values(props.easyCounts).filter(v => v > 0).length,Object.keys(props.easyCounts).filter(key => props.easyCounts[key] > 0)) 
     } else {
-      emits('update:current', newCurrent)
+      emit('update:current', newCurrent)
     }
     answered.value = false
   }, 300)

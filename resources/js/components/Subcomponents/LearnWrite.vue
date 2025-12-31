@@ -45,7 +45,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:current', 'markEasy', 'markHard','openEndModal'])
+const emit = defineEmits(['update:current', 'markEasy', 'markHard','openEndModal'])
 
 const userAnswer = ref('')
 const feedback = ref('')
@@ -62,9 +62,9 @@ const checkAnswer = () => {
   isCorrect.value = userAnswer.value.trim().toLowerCase() === currentCard.value.answer.trim().toLowerCase()
   feedback.value = isCorrect.value ? '✅ Poprawnie!' : `❌ Błąd, prawidłowa odpowiedź: ${currentCard.value.answer}`
   if (isCorrect.value) {
-    emits('markEasy',currentCard.value.id)
+    emit('markEasy',currentCard.value.id)
   } else {
-    emits('markHard',currentCard.value.id)
+    emit('markHard',currentCard.value.id)
   }
 }
 
@@ -78,9 +78,9 @@ const nextCard = () => {
   setTimeout(() => {
     const newCurrent = (props.current + 1) % props.flashcards.length
     if (newCurrent === 0) {
-      emits('openEndModal',Object.values(props.easyCounts).filter(v => v > 0).length,Object.keys(props.easyCounts).filter(key => props.easyCounts[key] > 0)) 
+      emit('openEndModal',Object.values(props.easyCounts).filter(v => v > 0).length,Object.keys(props.easyCounts).filter(key => props.easyCounts[key] > 0)) 
     } else {
-      emits('update:current', newCurrent)
+      emit('update:current', newCurrent)
     }
     answered.value = false
   }, 300)

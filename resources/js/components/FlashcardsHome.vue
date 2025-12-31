@@ -1,6 +1,6 @@
 <template>
  
-    <nav class="home-grid grid">
+<nav class="home-grid grid">
   <HomeCard
     class="sets"
     href="/sets"
@@ -41,7 +41,7 @@ import HomeCard from './Subcomponents/HomeCard.vue'
 </script>
 
 <style scoped>
-  .home-grid {
+.home-grid {
   max-width: 1000px;
   margin: 60px auto;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));

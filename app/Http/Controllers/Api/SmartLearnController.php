@@ -9,14 +9,12 @@ use App\Models\SmartLearnSession;
 use App\Models\Flashcard;
 use App\Services\SmartLearnService;
 use App\Services\SmartLearnAnswerService;
-use App\Services\MotivationService;
 
 class SmartLearnController extends Controller
 {
     public function __construct(
         protected SmartLearnService $service,
         protected SmartLearnAnswerService $answerService,
-        protected MotivationService $motivationService
     ) {}
 
     public function start(StartSmartLearnRequest $request)
@@ -55,6 +53,7 @@ class SmartLearnController extends Controller
             ->firstOrFail();
 
         abort_if($question->answered_at, 409);
+        abort_if($session->finished_at, 409);
 
         $isCorrect = $this->answerService->answer(
             $session,

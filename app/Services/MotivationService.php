@@ -38,7 +38,7 @@ class MotivationService
         '🔥 Ważne, że próbujesz — z czasem będzie lepiej!',
     ];
 
-    public function exam(int $percent): string
+    public function message(int $percent): string
     {
         return match (true) {
             $percent >= 80 => Arr::random($this->great),

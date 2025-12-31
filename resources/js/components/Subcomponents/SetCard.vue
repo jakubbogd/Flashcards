@@ -1,11 +1,11 @@
 <template>
   <div class="set-card pointer">
-    <input class="green-border-input input-field" v-model="props.set.name" @blur="emits('updateSet', props.set)" />
-    <input class="green-border-input input-field" v-model="props.set.description"  @blur="emits('updateSet', props.set)" placeholder="Opis" />
-    <p>{{ props.set.flashcards_count ?? 0 }} fiszek</p>
+    <input class="green-border-input input-field" v-model="set.name" @blur="emit('updateSet', set)" />
+    <input class="green-border-input input-field" v-model="set.description"  @blur="emit('updateSet', set)" placeholder="Opis" />
+    <p>{{ set.flashcards_count ?? 0 }} fiszek</p>
     <div class="buttons flex">
-      <button class="btn green-btn" @click="goTo(`create?chosen=${props.set.id}`)">Twórz</button>
-      <button class="btn red-btn" @click="emits('setRemoved', props.set.id)">Usuń</button>
+      <button class="btn green-btn" @click="goTo(`create?chosen=${set.id}`)">Twórz</button>
+      <button class="btn red-btn" @click="emit('setRemoved', set.id)">Usuń</button>
     </div>
   </div>
   
@@ -13,8 +13,9 @@
 
 <script setup>
 import { goTo } from '@/helpers/helpers'
-const props=defineProps({ set: Object })
-const emits=defineEmits(['setRemoved','updateSet'])
+
+defineProps({ set: Object })
+const emit=defineEmits(['setRemoved','updateSet'])
 
 </script>
 

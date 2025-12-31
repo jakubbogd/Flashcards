@@ -24,10 +24,7 @@ class FlashcardController extends Controller
 
     public function index(Set $set)
     {
-        return $set->flashcards()
-            ->with('options')
-            ->latest()
-            ->get();
+        return $set->flashcards()->with('options')->latest()->get();
     }
 
     public function store(StoreFlashcardRequest $request, Set $set)
@@ -35,7 +32,7 @@ class FlashcardController extends Controller
         $validated = $request->validated();
 
         $type = $this->flashcardService
-            ->determineType($validated['question'], $validated['answer']);
+            ->determineType($validated['question']);
 
         if ($request->hasFile('image')) {
             $data['image_path'] = $request->file('image')->store('flashcards', 'public');
@@ -61,13 +58,11 @@ class FlashcardController extends Controller
         $validated = $request->validated();
 
         if ($flashcard->question !== $validated['question'] || $flashcard->answer !== $validated['answer']) {
-            $flashcard->options()->delete();
             $flashcard->update($validated);
             $type = $this->flashcardService->determineType($validated['question']);
             $flashcard->update(['type' => $type]);
-            $this->flashcardService->generateOptions($flashcard);
         }
-        if ($flashcard->notes !== $validated['notes']) {
+        if (array_key_exists('notes',$validated) && $flashcard->notes !== $validated['notes']) {
             $flashcard->update(['notes' => $validated['notes']]);
         }
         return $flashcard->load('options');
@@ -78,7 +73,6 @@ class FlashcardController extends Controller
         $flashcard->update($request->validated());
         return response()->json($flashcard->load('options'));
     }
-
 
     public function destroy(Set $set, Flashcard $flashcard)
     {
@@ -102,22 +96,5 @@ class FlashcardController extends Controller
         $flashcard->save();
 
         return $flashcard;
-    }
-
-    public function updateOption(Request $request, FlashcardOption $option)
-    {
-        $option->text = $request->text;
-        $option->save();
-        return $option;
-    }
-
-    public function addOption(Request $request, Flashcard $flashcard)
-    {
-        $option = FlashcardOption::create([
-                'flashcard_id' => $flashcard->id,
-                'text' => $request->text,
-                'is_correct' =>  false
-            ]);
-        return $option;
     }
 }

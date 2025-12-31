@@ -133,8 +133,8 @@ const endCycle = () => {
 const loadFlashcards = async () => {
   try {
     flashcards.value = await flashcardService.getFlashcards(selectedSetId.value)
-  } catch (e) {
-    console.error('Błąd podczas ładowania fiszek:', e)
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -145,7 +145,7 @@ const handleMarkLearned = async (cardId) => {
     if (card) card.learned = true
     loadFlashcards()
   } catch (error) {
-    console.error('Błąd podczas oznaczania jako nauczone:', error)
+    console.error(error)
   }
 }
 </script>
@@ -158,8 +158,6 @@ const handleMarkLearned = async (cardId) => {
 }
 
 
-
-/* Responsywność */
 @media (max-width: 768px) {
 
   .mode-select {

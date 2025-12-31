@@ -12,7 +12,7 @@
       :key="folder.id"
       :folder="folder"
       :sets="sets.filter(set => set.folder_id === folder.id)"
-      @loadSets="id => loadSets(id)"
+      @loadSets="loadSets()"
     />
 
   </div>
@@ -36,8 +36,8 @@ const loadFolders = async () => {
 const loadSets = async () => {
   try {
     sets.value = await hierarchyService.getSets()
-  } catch (e) {
-    console.error(e)
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -45,16 +45,14 @@ const loadSets = async () => {
 const addFolder = async () => {
   if (!newFolderName.value.trim()) return
   try {
-    const res = await hierarchyService.addFolder(newFolderName.value.trim())
+    const res = await hierarchyService.addFolder(newFolderName.value)
     folders.value.unshift(res)
     newFolderName.value = ''
     loadFolders()
-  } catch (e) {
-    console.error('Błąd przy tworzeniu folderu:', e)
+  } catch (error) {
+    console.error(error)
   }
 }
-
-
 
 onMounted(()=>{
   loadSets()

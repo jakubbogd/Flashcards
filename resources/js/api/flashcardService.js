@@ -8,9 +8,9 @@ export const flashcardService = {
 
   async addFlashcards(set_id, question, answer, notes, set, image) {
     const { data } = await apiClient.post(`/${set_id}/flashcards`, {
-      question: question,
-      answer: answer,
-      notes: notes,
+      question: question.trim(),
+      answer: answer.trim(),
+      notes: notes.trim(),
       set: set,
       image: image
     }, {
@@ -20,9 +20,9 @@ export const flashcardService = {
 
   async updateFlashcard(setId, flashcardId,question,answer,notes) {
     const { data } = await apiClient.put(`/${setId}/flashcards/${flashcardId}`, {
-      question: question,
-      answer: answer,
-      notes: notes,
+      question: question.trim(),
+      answer: answer.trim(),
+      notes: notes.trim(),
     })
     return data;
   },
@@ -64,7 +64,7 @@ export const flashcardService = {
 
   async updateWrongAnswer(optionId,optionText) {
     const { data } = await apiClient.put(`/option/${optionId}`, {
-      text: optionText
+      text: optionText.trim()
     })
     return data
   },

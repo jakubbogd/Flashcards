@@ -49,7 +49,7 @@
           class="lightbox-image"
           @click.stop
         />
-        <span class="close-btn">✕</span>
+        <close-x/>
       </div>
     </transition>
   </div>
@@ -57,6 +57,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import CloseX from './CloseX.vue'
 
 const props = defineProps({
   flashcards: {
@@ -73,7 +74,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['update:current', 'markEasy', 'markHard','openEndModal'])
+const emit = defineEmits(['update:current', 'markEasy', 'markHard','openEndModal'])
 
 const showAnswer = ref(false)
 const rotateY = ref(0)
@@ -132,17 +133,15 @@ const flipCard = () => {
 
 const markEasy = () => {
   const cardId = props.flashcards[props.current].id
-  emits('markEasy',cardId)
+  emit('markEasy',cardId)
   nextCard()
 }
 
 const markHard = () => {
   const cardId = props.flashcards[props.current].id
-  emits('markHard',cardId)
+  emit('markHard',cardId)
   nextCard()
 }
-
-
 
 const nextCard = () => {
   if (props.flashcards.length === 0) return
@@ -150,9 +149,9 @@ const nextCard = () => {
   setTimeout(() => {
     const newCurrent = (props.current + 1) % props.flashcards.length
     if (newCurrent === 0) {
-      emits('openEndModal',Object.values(props.easyCounts).filter(v => v > 0).length,Object.keys(props.easyCounts).filter(key => props.easyCounts[key] > 0)) 
+      emit('openEndModal',Object.values(props.easyCounts).filter(v => v > 0).length,Object.keys(props.easyCounts).filter(key => props.easyCounts[key] > 0)) 
     } else {
-      emits('update:current', newCurrent)
+      emit('update:current', newCurrent)
     }
     showAnswer.value = false
     rotateY.value = 0
@@ -162,16 +161,10 @@ const nextCard = () => {
   }, 300)
    
 }
-
-
 </script>
 
 
 <style scoped>
-  .clickable {
-  cursor: zoom-in;
-}
-
 /* tło */
 .lightbox {
   position: fixed;

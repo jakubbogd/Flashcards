@@ -31,4 +31,19 @@ class ExamQuestion extends Model
     {
         return $this->belongsTo(Exam::class);
     }
+
+
+    protected static function booted(): void
+    {
+        static::updated(function (ExamQuestion $question) {
+            $exam = $question->exam;
+            if (
+                $exam->finished_at === null &&
+                $exam->questions()->whereNull('answered_at')->count() === 0
+            ) {
+                $exam->update(['finished_at' => now()]);
+            }
+        });
+
+    }
 }

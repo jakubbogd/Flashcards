@@ -14,7 +14,7 @@ class MotivationServiceTest extends TestCase
     {
         $service = new MotivationService();
 
-        $message = $service->exam(90);
+        $message = $service->message(90);
 
         $this->assertIsString($message);
     }
@@ -24,7 +24,7 @@ class MotivationServiceTest extends TestCase
     {
         $service = new MotivationService();
 
-        $message = $service->exam(40);
+        $message = $service->message(40);
 
         $this->assertIsString($message);
     }
@@ -34,7 +34,7 @@ class MotivationServiceTest extends TestCase
     {
         $service = new MotivationService();
 
-        $message = $service->exam(10);
+        $message = $service->message(10);
 
         $this->assertIsString($message);
     }

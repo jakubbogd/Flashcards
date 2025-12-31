@@ -1,11 +1,6 @@
 import apiClient from './client';
 
 export const examService = {
-  async getFolders() {
-    const { data } = await apiClient.get('/folders');
-    return data;
-  },
-
   async getHistory() {
     const { data } = await apiClient.get('/exams');
     return data;

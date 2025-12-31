@@ -2,13 +2,12 @@
   <div class="con-card">
     <h2>{{ question.flashcard.question }}</h2>
 
-    <div v-if="mode==='multiple_choice'" class="options grid">
+    <div v-if="props.mode==='multiple_choice'" class="options grid">
       <button
         v-for="opt in question.flashcard.options"
         :key="opt.id"
         class="blue-btn btn"
-        @click="answer(opt.is_correct)"
-        
+        @click="emit('answered', opt.is_correct)"
       >
         {{ opt.text }}
       </button>
@@ -32,6 +31,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+
 const props = defineProps({
   question: { type: Object, required: true },
   mode: { type: String, default: 'multiple_choice' }
@@ -41,10 +41,6 @@ const emit = defineEmits(['answered'])
 
 const userInput = ref('')
 const answerInput = ref(null)
-
-const answer = (isCorrect) => {
-  emit('answered', isCorrect)
-}
 
 onMounted(() => {
   if (answerInput.value) answerInput.value.focus()

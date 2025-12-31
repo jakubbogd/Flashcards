@@ -13,16 +13,14 @@ import { goTo } from '@/helpers/helpers'
 </script>
 
 <style scoped>
-    .home-btn {
+  .home-btn {
   position: absolute;
   top: 16px;
   left: 16px;
-
   background: transparent;
   border: none;
   font-size: 26px;
   cursor: pointer;
-
   opacity: 0.7;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
