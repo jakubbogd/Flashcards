@@ -16,7 +16,7 @@ class StartSmartLearnRequest extends FormRequest
         return [
             'set_ids' => ['required', 'array', 'min:1'],
             'set_ids.*' => ['exists:sets,id'],
-            'count' => ['required', 'integer', 'min:1', 'max:100'],
+            'count' => ['required', 'integer', 'min:1'],
         ];
     }
 }

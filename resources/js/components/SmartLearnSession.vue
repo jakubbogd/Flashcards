@@ -2,7 +2,8 @@
   <div class="container flex">
     <GoToMain />
     <div class="con-card">
-      <div  v-if="current">
+    
+    <div  v-if="current">
     <h2>{{ current.flashcard.question }}</h2>
 
     <div v-if="mode==='multiple_choice'">
@@ -11,22 +12,31 @@
         v-for="opt in current.flashcard.options"
         :key="opt.id"
         class="option-btn btn option"
-        :class="selectedOptionId === opt.id ? feedbackClass : ''"
+       
+
+        :class="{
+          'green-btn correct': opt.text === current.flashcard.answer  && selectedOptionId,
+          'red-btn wrong': opt.text !== current.flashcard.answer && selectedOptionId && selectedOptionId === opt.id
+        }"
+
+
         @click="answer(opt.text, opt.id)"
       >
         {{ opt.text }}
-        
       </button>
       </div>
     </div>
     <div v-else>
       <input class="input-field blue-border-input" v-model="text" placeholder="Twoja odpowiedź..." @keyup.enter="submitText"/>
       <button class="blue-btn btn" @click="answer(text, 0)">Odpowiedz</button>
+      <div v-if="feedbackClass==='wrong'">
+        Poprawna odpowiedź to: {{ current.flashcard.answer }}
+      </div>
     </div>
-
+    
 
     <p>{{ index }} / {{ total }}</p>
-  </div>
+     </div>
 
   <div v-else-if="session" class="session-end">
     <h2>🎉 Sesja zakończona!</h2>
@@ -40,14 +50,22 @@
         :key="q.id"
         class="result-item"
       >
+  
         <h3>{{ q.flashcard.question }}</h3>
+        <div :class="{
+              'correct-answer': q.is_correct,
+              'wrong-answer': !q.is_correct
+            }">
+              <span v-if="q.is_correct" class="correct-notification">🎉 Twoja odpowiedź była poprawna!</span>
+              <span v-else class="wrong-notification">❌ Niestety, twoja odpowiedź nie była poprawna</span>
+            </div>
         <ul v-if="odps[i][1] === 'multiple_choice'">
           <li
             v-for="opt in q.flashcard.options"
             :key="opt.id"
             :class="{
               correct: opt.is_correct,
-              incorrect: !opt.is_correct && !odps[i][0]
+             
             }"
           >
             {{ opt.text }}
@@ -91,6 +109,7 @@ let mode = 'multiple_choice'
 const load = async () => {
   session.value = await smartLearnService.getSession(uuid)
   total.value = session.value.total
+  console.log(session.value.questions)
   current.value = session.value.questions.find(q => !q.answered_at) || null
   mode = Math.random() < 0.5 ? 'multiple_choice' : 'write'
   selectedOptionId.value = null
@@ -103,7 +122,7 @@ const answer = async (optionText, optionId) => {
 
   const answer = await smartLearnService.postAnswer(uuid,current.value.order,optionText,optionId,mode)
 
-  feedbackClass.value = answer.is_correct ? 'correct' : 'incorrect'
+  feedbackClass.value = answer.is_correct ? 'correct' : 'wrong'
   if (answer.is_correct) correctCount.value++
   odps.value.push([answer.is_correct,mode])
 
@@ -116,7 +135,7 @@ const answer = async (optionText, optionId) => {
   setTimeout(async () => {
     index.value++
     await load()
-  }, 800)
+  }, 5000)
   
 }
 
@@ -145,7 +164,7 @@ onMounted(load)
   background: #10b981;
 }
 
-.option.incorrect:hover{
+.option.wrong:hover{
   background: #ef4444;
 }
 
@@ -156,17 +175,38 @@ onMounted(load)
   animation: correctPulse 0.4s ease;
 }
 
-.option.incorrect {
+.option.wrong {
   background: #ef4444;
   color: white;
   border-color: #b91c1c;
   animation: wrongShake 0.4s ease;
 }
 
+.correct-answer {
+  color: #10b981;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.wrong-answer {
+  color: #ef4444;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.correct-notification {
+  color: #10b981;
+  font-weight: 600;
+}
+
+.wrong-notification {
+  color: #ef4444;
+  font-weight: 600;
+}
 
 .session-end {
   text-align: center;
-  padding: 40px;
+  padding: 20px;
 }
 
 .summary {
@@ -205,7 +245,7 @@ onMounted(load)
   border-color: #059669;
 }
 
-.result-item li.incorrect {
+.result-item li.wrong {
   background-color: #ef4444;
   color: white;
   border-color: #dc2626;

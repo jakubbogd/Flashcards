@@ -2,8 +2,7 @@
   <div class="container flex">
     <GoToMain/>
     <h1>Tworzenie fiszek do zestawu {{ set.name }}</h1>
-    
-    <button class="btn blue-btn" @click="goTo(`learn?chosen=${set.value.id}`)">
+    <button class="btn blue-btn" @click="goTo(`learn?chosen=${set.id}`)">
       Przejdź do uczenia się fiszek
     </button>
  

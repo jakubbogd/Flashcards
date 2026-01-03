@@ -6,7 +6,7 @@
     href="/sets"
     icon="📦"
     title="Zestawy fiszek"
-    description="Twórz i porządkuj fiszki w zestawach"
+    description="Twórz fiszki oraz ucz się pojedynczych zestawów"
   />
   <HomeCard
   class="exam"
