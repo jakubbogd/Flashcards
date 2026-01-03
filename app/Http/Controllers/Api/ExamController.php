@@ -1,6 +1,4 @@
 <?php
-// app/Http/Controllers/Api/ExamController.php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -14,23 +12,23 @@ use App\Services\MotivationService;
 
 class ExamController extends Controller
 {
-    protected ExamService $examService;
-    protected StreakService $streakService;
-    protected MotivationService $motivationService;
+    protected ExamService $exam;
+    protected StreakService $streak;
+    protected MotivationService $motivation;
 
     public function __construct(
-        ExamService $examService,
-        StreakService $streakService,
-        MotivationService $motivationService
+        ExamService $exam,
+        StreakService $streak,
+        MotivationService $motivation
     ) {
-        $this->examService = $examService;
-        $this->streakService = $streakService;
-        $this->motivationService = $motivationService;
+        $this->exam = $exam;
+        $this->streak = $streak;
+        $this->motivation = $motivation;
     }
 
     public function start(StartExamRequest $request)
     {
-        $exam = $this->examService->start(
+        $exam = $this->exam->start(
             $request->validated()['set_ids'],
             $request->validated()['difficulty']
         );
@@ -46,7 +44,7 @@ class ExamController extends Controller
             ->with(['questions.flashcard.options'])
             ->firstOrFail();
 
-        $this->streakService->markToday();
+        $this->streak->markToday();
 
         return response()->json([
             'uuid' => (string) $exam->uuid,
@@ -59,17 +57,16 @@ class ExamController extends Controller
             'percent' => $exam->percent,
             'questions' => $exam->questions,
             'time_limit' => $exam->time_limit,
-            'message' => $this->motivationService->exam($exam->percent),
-            'streak' => $this->streakService->current(),
+            'message' => $this->motivation->message($exam->percent),
+            'streak' => $this->streak->current(),
         ]);
     }
 
     public function answer(AnswerExamRequest $request, string $uuid, int $order)
-    {
-        
+    {   
         $exam = Exam::where('uuid', $uuid)->firstOrFail();
 
-        $this->examService->autoFinishIfTimeExceeded($exam);
+        $this->exam->autoFinishIfTimeExceeded($exam);
         abort_if($exam->finished_at, 409, 'Exam finished');
 
         $question = $exam->questions()
@@ -86,10 +83,6 @@ class ExamController extends Controller
             'is_correct' => $data['is_correct'],
             'answered_at' => now(),
         ]);
-
-        if ($exam->questions()->whereNull('answered_at')->count() === 0) {
-            $exam->update(['finished_at' => now()]);
-        }
 
         return response()->json(['ok' => true]);
     }

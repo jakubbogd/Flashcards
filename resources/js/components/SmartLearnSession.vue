@@ -89,6 +89,7 @@ import { ref, onMounted, computed } from 'vue'
 import Toast from './Subcomponents/Toast.vue'
 import GoToMain from './Subcomponents/GoToMain.vue'
 import { smartLearnService } from '@/api/smartLearnService'
+import { rand } from '@/helpers/helpers'
 
 const uuid = window.location.pathname.split('/').pop()
 
@@ -111,7 +112,7 @@ const load = async () => {
   total.value = session.value.total
   console.log(session.value.questions)
   current.value = session.value.questions.find(q => !q.answered_at) || null
-  mode = Math.random() < 0.5 ? 'multiple_choice' : 'write'
+  mode = rand()
   selectedOptionId.value = null
   feedbackClass.value = ''
   text.value=''

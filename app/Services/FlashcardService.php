@@ -18,6 +18,7 @@ class FlashcardService
 
     public function generateOptions(Flashcard $flashcard): void
     {
+        $flashcard->options()->delete();
         $options = [];
 
         switch ($flashcard->type) {

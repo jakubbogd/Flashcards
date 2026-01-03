@@ -13,15 +13,15 @@ export const hierarchyService = {
 
   async addFolder(name) {
     const { data } = await apiClient.post(`/folders`, {
-      name: name
+      name: name.trim()
     }); 
     return data;
   },
 
   async addSet(name,description,folder_id) {
     const { data } = await apiClient.post(`/sets`, {
-      name: name,
-      description: description,
+      name: name.trim(),
+      description: description.trim(),
       folder_id: folder_id
     }); 
     return data;
@@ -29,8 +29,8 @@ export const hierarchyService = {
 
   async updateSet(id, name,description) {
     const { data } = await apiClient.put(`/sets/${id}`, {
-      name: name,
-      description: description,
+      name: name.trim(),
+      description: description.trim(),
     }); 
     return data;
   },

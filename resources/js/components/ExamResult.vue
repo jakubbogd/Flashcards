@@ -58,6 +58,7 @@ import Toast from './Subcomponents/Toast.vue'
 import { examService } from '@/api/examService'
 import { goTo } from '@/helpers/helpers'
 
+
 const exam = ref(null)
 const uuid = window.location.pathname.split('/')[2]
 const showToast = ref(false)

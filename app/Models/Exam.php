@@ -47,4 +47,5 @@ class Exam extends Model
     {
         return !is_null($this->finished_at);
     }
+
 }

@@ -1,14 +1,14 @@
 <script setup>
 import Modal from "./Modal.vue"
 
-const emits = defineEmits(['confirm', 'close'])
+const emit = defineEmits(['confirm', 'close'])
 
 const close = () => {
-  emits('close')
+  emit('close')
 }
 
 const confirmDelete = () => {
-  emits('confirm')
+  emit('confirm')
   close()
 }
 </script>

@@ -7,8 +7,8 @@
     </p>
     <p>Czy chcesz je oznaczyć jako nauczone?</p>
     <div class="buttons flex">
-      <button @click="restartCycle" class="btn green-btn">Tak, oznacz jako nauczone</button>
-      <button @click="endCycle" class="btn red-btn">Nie, wróć do menu</button>
+      <button @click="emit('restartCycle')" class="btn green-btn">Tak, oznacz jako nauczone</button>
+      <button @click="emit('endCycle')" class="btn red-btn">Nie, wróć do menu</button>
     </div>
   </Modal>
 </template>
@@ -16,8 +16,8 @@
 <script setup>
 import Modal from "./Modal.vue"
 
-const emits = defineEmits(['restartCycle', 'endCycle'])
-const props = defineProps({
+const emit = defineEmits(['restartCycle', 'endCycle'])
+defineProps({
   easyCount: {
     type: Number,
     required: true
@@ -27,11 +27,4 @@ const props = defineProps({
     required: true
   }
 })
-
-const restartCycle = () => {
-  emits('restartCycle')
-}
-const endCycle = () => {
-  emits('endCycle')
-}
 </script>

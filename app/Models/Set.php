@@ -26,4 +26,11 @@ class Set extends Model
     {
         return $this->belongsTo(Folder::class);
     }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Set $set) {
+            $set->flashcards()->delete();
+        });
+    }
 }

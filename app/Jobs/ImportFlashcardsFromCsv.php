@@ -31,7 +31,7 @@ class ImportFlashcardsFromCsv implements ShouldQueue
 
         foreach ($this->content as $key => $line) {
             if ($key === 0) {
-                continue; // Pomijamy nagłówek
+                continue;
             }
             
             [$question, $answer] = explode(';', $line);

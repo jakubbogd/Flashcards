@@ -33,7 +33,6 @@ class SetController extends Controller
 
     public function destroy(Set $set)
     {
-        $set->flashcards()->delete();
         $set->delete();
         return response()->json(null, 204);
     }

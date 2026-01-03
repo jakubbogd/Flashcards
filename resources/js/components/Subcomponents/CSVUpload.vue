@@ -78,7 +78,9 @@ const uploadCSV = async () => {
 </script>
 
 <style scoped>
-
+.hidden {
+  display: none;
+}
 
 .csv-dropzone {
   margin-top: 40px;

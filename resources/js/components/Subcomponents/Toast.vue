@@ -1,13 +1,11 @@
 <template>
     <transition name="slide">
-      <div v-if="showToast" class="toast" :class="{'green-btn': props.theme, 'red-btn':!props.theme}">{{ props.text }}</div>
+      <div v-if="showToast" class="toast" :class="{'green-btn': theme, 'red-btn':!theme}">{{ text }}</div>
     </transition>
 </template>
 
 <script setup>
-
-
-const props = defineProps({
+defineProps({
   showToast: Boolean,
   text: {
     type: String,

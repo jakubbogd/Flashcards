@@ -19,4 +19,11 @@ class Folder extends Model
     {
         return $this->hasManyThrough(Flashcard::class, Set::class);
     }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Folder $folder) {
+            $folder->sets()->delete();
+        });
+    }
 }

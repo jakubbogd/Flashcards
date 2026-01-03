@@ -34,7 +34,7 @@ import Form from './/Form.vue'
 import { hierarchyService } from '@/api/hierarchyService'
 
 
-const emits = defineEmits(['loadSets'])
+const emit = defineEmits(['loadSets'])
 const props = defineProps({
   folder: Object,
   sets: Array,
@@ -48,24 +48,24 @@ const toggle = () => (open.value = !open.value)
 const addSet = async () => {
   if (!newSetName.value.trim()) return
   try {
-    await hierarchyService.addSet(newSetName.value.trim(),newSetDescription.value.trim(),props.folder.id)
+    await hierarchyService.addSet(newSetName.value,newSetDescription.value,props.folder.id)
     newSetName.value = ''
     newSetDescription.value = ''
-    emits('loadSets', props.folder.id)
-  } catch (e) {
-    console.error('Błąd przy tworzeniu zestawu:', e)
+    emit('loadSets')
+  } catch (error) {
+    console.error(error)
   }
 }
 onMounted(() => {
-  emits('loadSets', props.folder.id)
+  emit('loadSets')
 })
 
 const removeSet = async (id) => {
   try {
     await hierarchyService.deleteSet(id)
-    emits('loadSets', props.folder.id)
-  } catch (e) {
-    console.error('Błąd przy usuwaniu zestawu:', e)
+    emit('loadSets')
+  } catch (error) {
+    console.error(error)
   }
 }
 
@@ -74,11 +74,11 @@ const updateSet = async (set) => {
   if (!set.name.trim()) return
   savingId.value = set.id
   try {
-    await hierarchyService.updateSet(set.id, set.name.trim(),set.description.trim())
+    await hierarchyService.updateSet(set.id, set.name,set.description)
     showToast.value = true
     setTimeout(() => showToast.value = false, 1500)
   } catch (error) {
-    console.error('Błąd podczas aktualizacji zestawu:', error)
+    console.error(error)
   } finally {
    savingId.value = null
   }

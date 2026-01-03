@@ -24,7 +24,7 @@ import { ref, onMounted, computed } from 'vue'
 import ExamQuestion from './ExamQuestion.vue'
 import GoToMain from './Subcomponents/GoToMain.vue'
 import { examService } from '@/api/examService'
-import { goTo } from '@/helpers/helpers'
+import { goTo,rand } from '@/helpers/helpers'
 
 const exam = ref(null)
 const index = ref(0)
@@ -34,17 +34,20 @@ let timer = null
 
 const uuid = window.location.pathname.split('/').pop()
 
-const rand = () => {
-return Math.random() < 0.5 ? 'multiple_choice' : 'write'
-}
-
 onMounted(async () => {
   exam.value = await examService.getExam(uuid)
   if (exam.value.difficulty === 'hard') mode.value='write'
   else if (exam.value.difficulty === 'normal') mode.value = rand()
   else mode.value = 'multiple_choice'
   if (!exam.value.finished_at) {
-    startTimer()
+      timeLeft.value = exam.value.time_limit
+      timer = setInterval(() => {
+        timeLeft.value--
+        if (timeLeft.value <= 0) {
+          clearInterval(timer)
+          goTo(`exam/${uuid}/result`)
+        }
+      }, 1000)
   }
 
 })
@@ -63,19 +66,6 @@ const submitAnswer = async (isCorrect) => {
   if (exam.value.difficulty === 'normal') {
     mode.value = rand()
   }
-}
-
-const startTimer = () => {
-  timeLeft.value = exam.value.time_limit
-
-  timer = setInterval(() => {
-    timeLeft.value--
-
-    if (timeLeft.value <= 0) {
-      clearInterval(timer)
-      goTo(`exam/${uuid}/result`)
-    }
-  }, 1000)
 }
 
 const timerClass = computed(() => {

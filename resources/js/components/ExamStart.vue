@@ -67,6 +67,7 @@
 import { ref, onMounted } from 'vue'
 import GoToMain from './Subcomponents/GoToMain.vue'
 import { examService } from '@/api/examService'
+import { hierarchyService } from '@/api/hierarchyService'
 import { goTo } from '@/helpers/helpers'
 
 
@@ -82,7 +83,7 @@ const difficulties = [
 ]
 
 onMounted(async () => {
-  folders.value = await examService.getFolders()
+  folders.value = await hierarchyService.getFolders()
 })
 
 const startExam = async () => {
@@ -94,8 +95,8 @@ const startExam = async () => {
   try {
     const uuid = await examService.startExam(selectedSets.value, difficulty.value)
     goTo(`exam/${uuid.uuid}`)
-  } catch (e) {
-    console.error(e)
+  } catch (error) {
+    console.error(error)
   } finally {
     loading.value = false
   }
@@ -104,8 +105,6 @@ const startExam = async () => {
 
 
 <style scoped>
-
-
 .difficulty-option {
   flex: 1;
   border-radius: 18px;

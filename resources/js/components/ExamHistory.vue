@@ -53,18 +53,17 @@ const MapLvl = lvl => {
   if (lvl === 'hard') return 'trudny'
 }
 
-const fetchExams = async () => {
-  exams.value= await examService.getHistory()
-  loading.value = false
-}
-
 const formatDate = (date) =>
   new Intl.DateTimeFormat('pl-PL', {
     dateStyle: 'medium',
     timeStyle: 'short'
   }).format(new Date(date))
 
-onMounted(fetchExams)
+onMounted(async () => {
+    exams.value= await examService.getHistory()
+    loading.value = false
+  }
+)
 </script>
 
 <style scoped>

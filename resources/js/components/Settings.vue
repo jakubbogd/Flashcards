@@ -3,8 +3,6 @@
       <GoToMain />
   <div class="con-card">
     <h2>⚙️ Ustawienia</h2>
-
-
     <div class="setting toggle">
       <label>🌙 Tryb ciemny</label>
       <input type="checkbox" v-model="dark" />
@@ -25,15 +23,11 @@ const dark = ref(false)
 onMounted(async () => {
   try {
     const res = await settingsService.getSettings()
-
-    // 🔹 upewniamy się, że jest boolean
     dark.value = Boolean(res.dark_mode)
-
-    applyDark()
     ready.value = true
   } catch {
-    // fallback – tylko UX
     dark.value = localStorage.getItem('dark_mode') === '1'
+  } finally {
     applyDark()
   }
 })
