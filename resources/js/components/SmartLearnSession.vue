@@ -27,7 +27,7 @@
       </div>
     </div>
     <div v-else>
-      <input class="input-field blue-border-input" v-model="text" placeholder="Twoja odpowiedź..." @keyup.enter="submitText"/>
+      <input class="input-field blue-border-input" v-model="text" placeholder="Twoja odpowiedź..." @keyup.enter="answer(text, 0)"/>
       <button class="blue-btn btn" @click="answer(text, 0)">Odpowiedz</button>
       <div v-if="feedbackClass==='wrong'">
         Poprawna odpowiedź to: {{ current.flashcard.answer }}
@@ -133,10 +133,17 @@ const answer = async (optionText, optionId) => {
   
   setTimeout(() => showToast.value = false, 1000)
 
-  setTimeout(async () => {
-    index.value++
-    await load()
-  }, 5000)
+  if (answer.is_correct) {
+    setTimeout(async () => {
+      index.value++
+      await load()
+    }, 1000)
+  } else {
+    setTimeout(async () => {
+      index.value++
+      await load()
+    }, 5000)
+  }
   
 }
 

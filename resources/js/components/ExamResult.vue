@@ -1,7 +1,7 @@
 <template>
   <div v-if="exam" class="container flex">
     <div class="con-card">
-      <h1>📊 Egzamiz zakończony</h1>
+      <h1>📊 Egzamin zakończony</h1>
 
       <p class="score">
     Wynik: <strong>{{ exam.score }} / {{ Math.min(exam.total,exam.questions.length) }}</strong>
@@ -25,8 +25,8 @@
         :key="q.id"
         class="question-review"
         :class="{
-          right: q.is_correct,
-          wrongquestion: q.is_correct === false
+          'question-review-right': q.is_correct,
+          'question-review-wrong': q.is_correct === false
         }"
       >
         <p>{{ q.flashcard.question }}</p>
@@ -36,8 +36,8 @@
             v-for="opt in q.flashcard.options"
             :key="opt.id"
             :class="{
-              right: opt.is_correct,
-              wronganswer: !opt.is_correct,
+              liright: opt.is_correct,
+              liwrong: !opt.is_correct,
               selected: opt.id === q.selected_option_id
             }"
           >
@@ -91,23 +91,34 @@ onMounted(async () => {
   }
 }
 
+body.dark .question-review-right {
+  border-left: 6px solid #10b981; /* emerald */
+  background: #052e1f;
+}
 
-.question-review.right {
+body.dark .question-review-wrong {
+  border-left: 6px solid #ef4444; /* red */
+  background: #2a0f14;
+}
+
+
+
+.question-review-right {
   border-left: 6px solid #059669;
   background: #ecfdf5;
 }
 
-.question-review.wrongquestion {
+.question-review-wrong {
   border-left: 6px solid #dc2626;
   background: #fef2f2;
 }
 
-li.right {
+.liright {
   color: #059669;
   font-weight: 600;
 }
 
-li.wronganswer {
+.liwrong {
   color: #dc2626;
 }
 
