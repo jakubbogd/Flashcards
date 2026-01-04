@@ -5,7 +5,7 @@
     <h1>Zestawy fiszek</h1>
    <Form @add="addFolder">
       <input v-model="newFolderName" placeholder="Nazwa folderu" class="input-field" required />
-      <button type="submit" class="blue-btn btn">Dodaj folder</button>
+      <button type="submit" class="blue-btn btn" @click="addFolder">Dodaj folder</button>
    </Form>
     <FolderSection
       v-for="folder in folders"

@@ -15,6 +15,7 @@ Route::apiResource('sets', SetController::class);
 Route::get('sets/{set}/flashcards', [FlashcardController::class, 'indexBySet']);
 Route::post('sets/{set}/flashcards', [FlashcardController::class, 'storeInSet']);
 Route::delete('flashcards/{flashcard}/image', [FlashcardController::class, 'deleteImage']);
+Route::delete('flashcards/{flashcard}', [FlashcardController::class, 'destroy']);
 Route::put('flashcards/{flashcard}/image', [FlashcardController::class, 'updateImage']);
 Route::put('option/{option}', [FlashcardOptionController::class, 'update']);
 Route::post('flashcards/{flashcard}/option', [FlashcardOptionController::class, 'store']);

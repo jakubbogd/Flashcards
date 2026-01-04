@@ -13,7 +13,7 @@
       <textarea v-model="newAnswer" placeholder="Odpowiedź" class="blue-border-input" ref="newAnswerEl" />
       <textarea v-model="newNotes" placeholder="Dodatkowe notatki" class="blue-border-input" ref="newNotesEl"/>
       <input type="file" @change="onFileChange" accept="image/*" />
-      <button type="submit" class="btn blue-btn" :disabled="loading">
+      <button @click="add" type="submit" class="btn blue-btn" :disabled="loading">
         <span>➕</span> Dodaj
       </button>
     </Form>
@@ -25,7 +25,7 @@
     <Lack v-if="flashcards.length === 0" />
 
     <Toast :showToast="showToast" />
-    <FlashcardsList :flashcards="flashcards"/>
+    <FlashcardsList :flashcards="flashcards" @reload="load()"/>
    
     <transition name="fade">
       <div v-if="previewImage" class="lightbox" @click="closeImage">
@@ -82,6 +82,11 @@ onMounted(async () =>{
   autoGrowTextarea(newAnswerEl.value)
   autoGrowTextarea(newNotesEl.value)
   window.addEventListener('keydown', e => {if (e.key === 'Escape') closeImage()})
+  load()
+})
+
+const load = async () => {
+    
   try {
     set.value = await hierarchyService.getSets()
     set.value = set.value.filter(set => set.id == selectedSetId.value)[0]
@@ -89,7 +94,7 @@ onMounted(async () =>{
   } catch (error) {
     console.error(error)
   }
-})
+}
 
 const onFileChange = (e) => {
   newImage.value = e.target.files[0]

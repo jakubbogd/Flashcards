@@ -35,8 +35,8 @@ export const flashcardService = {
     return data;
   },
 
-  async deleteFlashcard(setId, flashcardId) {
-    const { data } = await apiClient.delete(`/${setId}/flashcards/${flashcardId}`)
+  async deleteFlashcard(flashcardId) {
+    const { data } = await apiClient.delete(`/flashcards/${flashcardId}`)
     return data;
   },
 

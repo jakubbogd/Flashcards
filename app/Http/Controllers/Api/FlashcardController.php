@@ -74,7 +74,7 @@ class FlashcardController extends Controller
         return response()->json($flashcard->load('options'));
     }
 
-    public function destroy(Set $set, Flashcard $flashcard)
+    public function destroy(Flashcard $flashcard)
     {
         $flashcard->delete();
         return response()->json(null, 204);

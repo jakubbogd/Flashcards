@@ -10,7 +10,7 @@
     <Form v-if="open" @add="addSet">
       <input v-model="newSetName" placeholder="Nazwa zestawu" class="input-field" required />
       <input v-model="newSetDescription" placeholder="Opis (opcjonalnie)" class="input-field" />
-      <button type="submit" class="btn blue-btn">Dodaj zestaw</button>
+      <button type="submit" class="btn blue-btn" @click="addSet">Dodaj zestaw</button>
     </Form>
 
     <div v-if="open" class="sets flex">

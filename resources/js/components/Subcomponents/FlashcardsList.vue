@@ -6,10 +6,12 @@
           <textarea class="blue-border-input" v-model="card.answer" @input="autoGrow($event)" @blur="update(card)"/>
           <textarea class="blue-border-input" v-model="card.notes" @input="autoGrow($event)" @blur="update(card)" placeholder="Dodatkowe notatki"/>
           <div class="image-section">
+            
             <img v-if="card.image_path && card.image_path !== '0'" :src="`/storage/${card.image_path}`" alt="Obraz fiszki" class="card-image clickable" @click="openImage(card.image_path)"/>
             <label>
               <input type="file" accept="image/*" hidden @change="onUpdateChange($event, card)"/>
-              <span>📷 Zmień obrazek</span>
+              <span v-if="card.image_path && card.image_path !== '0'">📷 Zmień obrazek</span>
+              <span v-else>📷 Dodaj obrazek</span>
             </label>
             <button v-if="card.image_path && card.image_path !== '0'" @click="removeImage(card)" class="delete-image-btn">🗑️ Usuń obraz</button>
           </div>
@@ -51,6 +53,8 @@ defineProps({
   }
 })
 
+const emit = defineEmits(['reload'])
+
 const updateImage = ref(null)
 const savingId = ref(0)
 const newWrongAnswers = ref({})
@@ -76,8 +80,8 @@ const addWrongAnswer = async (card) => {
 
 const remove = async () => {
   try {
-    await deleteFlashcard.deleteFlashcard(selectedSetId.value, toDelete.value)
-    await load()
+    await flashcardService.deleteFlashcard(toDelete.value)
+    emit('reload')
   } catch (error) {
     console.error(error)
   }

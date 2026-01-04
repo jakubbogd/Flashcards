@@ -34,7 +34,7 @@ class FlashcardService
                 $options[] = ['text' => $flashcard->answer, 'is_correct' => true];
 
                 $gemini = new GeminiService();
-                $prompt = "Wygeneruj 3 sensowne, ale błędne odpowiedzi do pytania:{$flashcard->question}. Poprawna odpowiedź: {$flashcard->answer}. Podaj tylko same odpowiedzi, oddzielone średnikami. Odpowiedzi muszą być w podobnej gramatycznie postaci jak poprawna i takim samym formacie.";
+                $prompt = "Wygeneruj 3 sensowne, ale błędne odpowiedzi do pytania:{$flashcard->question}. Poprawna odpowiedź: {$flashcard->answer}. Podaj tylko same odpowiedzi, oddzielone średnikami. Odpowiedzi muszą być w podobnej gramatycznie postaci jak poprawna i takim samym formacie. Jeśli pytanie i odpowiedź to to samo słowo, ale w różnych językach, to podaj coś co brzmi podobnie lub losowy termin z tego samego zakresu.";
                 $text = $gemini->generate($prompt);
 
                 $others = array_map('trim', explode(';', $text));

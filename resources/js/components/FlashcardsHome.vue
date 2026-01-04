@@ -29,7 +29,7 @@
     href="/settings"
     icon="🧠"
     title="Ustawienia!"
-    description="Dostosuje aplikację pod siebie"
+    description="Dostosuj aplikację pod siebie"
   />
 
 </nav>
