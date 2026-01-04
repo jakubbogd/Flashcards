@@ -38,6 +38,23 @@ class MotivationService
         '🔥 Ważne, że próbujesz — z czasem będzie lepiej!',
     ];
 
+    protected array $correct = [
+        '✅ Dobra odpowiedź! Świetnie ogarnięte.',
+        '🎯 Trafione! Widać, że temat znasz.',
+        '👏 Brawo! Dokładnie o to chodziło.',
+        '💡 Poprawnie! Tak trzymaj.',
+        '🔥 Świetnie! Kolejny punkt na Twoje konto.',
+    ];
+
+    protected array $wrong = [
+        '❌ Niestety, to nie ta odpowiedź.',
+        '🤔 Tym razem się nie udało — spróbuj jeszcze raz.',
+        '📚 Błąd, ale to dobra okazja do nauki.',
+        '💭 Niepoprawnie — sprawdź odpowiedź.',
+        '🌱 Pomyłka się zdarza, jedziemy dalej!',
+    ];
+
+
     public function message(int $percent): string
     {
         return match (true) {
@@ -47,4 +64,12 @@ class MotivationService
             default => Arr::random($this->bad),
         };
     }
+
+    public function correct(bool $isCorrect): string
+    {
+        return $isCorrect
+            ? Arr::random($this->correct)
+            : Arr::random($this->wrong);
+    }
+
 }

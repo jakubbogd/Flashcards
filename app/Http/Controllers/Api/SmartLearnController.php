@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StartSmartLearnRequest;
 use App\Http\Requests\AnswerSmartLearnRequest;
 use App\Models\SmartLearnSession;
+use App\Services\MotivationService;
 use App\Models\Flashcard;
 use App\Services\SmartLearnService;
 use App\Services\SmartLearnAnswerService;
@@ -15,6 +16,7 @@ class SmartLearnController extends Controller
     public function __construct(
         protected SmartLearnService $service,
         protected SmartLearnAnswerService $answerService,
+        protected MotivationService $motivation,
     ) {}
 
     public function start(StartSmartLearnRequest $request)
@@ -63,9 +65,7 @@ class SmartLearnController extends Controller
 
         return response()->json([
             'is_correct' => $isCorrect,
-            'message' => $isCorrect
-                ? '✅ Dobrze! Tak właśnie się uczysz.'
-                : '❌ Spokojnie, to normalne – lecisz dalej.',
+            'message' => $this->motivation->correct($isCorrect),
         ]);
     }
 }

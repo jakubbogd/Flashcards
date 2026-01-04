@@ -12,14 +12,10 @@
         v-for="opt in current.flashcard.options"
         :key="opt.id"
         class="option-btn btn option"
-       
-
         :class="{
           'green-btn correct': opt.text === current.flashcard.answer  && selectedOptionId,
           'red-btn wrong': opt.text !== current.flashcard.answer && selectedOptionId && selectedOptionId === opt.id
         }"
-
-
         @click="answer(opt.text, opt.id)"
       >
         {{ opt.text }}
@@ -131,16 +127,16 @@ const answer = async (optionText, optionId) => {
   toastTheme.value = answer.is_correct
   showToast.value = true
   
-  setTimeout(() => showToast.value = false, 1000)
-
   if (answer.is_correct) {
     setTimeout(async () => {
       index.value++
+      showToast.value = false
       await load()
     }, 1000)
   } else {
     setTimeout(async () => {
       index.value++
+      showToast.value = false
       await load()
     }, 5000)
   }
