@@ -1,5 +1,5 @@
 <template>
-     <div class="csv-dropzone"  :class="{ active: isDragging }"  @dragover.prevent="isDragging = true"  @dragleave.prevent="isDragging = false"  @drop.prevent="onDrop">
+     <div class="con-card"  :class="{ active: isDragging }"  @dragover.prevent="isDragging = true"  @dragleave.prevent="isDragging = false"  @drop.prevent="onDrop">
       <input type="file" ref="fileInput" accept=".csv" class="hidden" @change="onFile"/>
       <div class="pointer" @click="triggerFile">
         <div class="icon">📄</div>
@@ -82,16 +82,6 @@ const uploadCSV = async () => {
   display: none;
 }
 
-.csv-dropzone {
-  margin-top: 40px;
-  margin-bottom: 15px;
-  padding: 30px;
-  border-radius: 20px;
-  background: white;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  text-align: center;
-  transition: 0.3s;
-}
 
 .csv-dropzone.active {
   box-shadow: 0 0 0 3px rgba(99,102,241,0.3);

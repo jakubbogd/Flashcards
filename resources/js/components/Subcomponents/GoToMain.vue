@@ -13,7 +13,11 @@ import { goTo } from '@/helpers/helpers'
 </script>
 
 <style scoped>
-  .home-btn {
+body.dark .home-btn {
+  color: #848b95;
+}
+
+.home-btn {
   position: absolute;
   top: 16px;
   left: 16px;

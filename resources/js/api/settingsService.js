@@ -3,7 +3,7 @@ import apiClient from './client';
 export const settingsService = {
 
   async getSettings() {
-    const { data } = await apiClient.get(`/settings}`); 
+    const { data } = await apiClient.get(`/settings`); 
     return data;
   },
 

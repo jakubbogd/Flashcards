@@ -11,6 +11,32 @@ body {
   background: #f8fafc;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #eef2ff, #fef3c7);
+}
+
+body.dark::before {
+  background: #0f172a;
+  
+}
+
+body.dark p {
+  color:#e5e7eb;
+}
+
+
+body.dark .con-card {
+  background: #1e293b;
+  color: #e5e7eb;
+}
+
+body.dark textarea {
+  background: #1e293b;
+}
 
 textarea {
   flex: 1 1 45%; /* zajmuje około połowy szerokości wiersza, może się kurczyć */
@@ -34,14 +60,7 @@ textarea {
 }
 
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
 
-  background: linear-gradient(135deg, #eef2ff, #fef3c7);
-}
 
 
 .mode-select {
@@ -52,6 +71,9 @@ body::before {
   margin-top: 10px;
 }
 
+body.dark .mode-btn:not(.active){
+  background: #16213a;
+}
 
 .mode-btn {
   background: #e5e7eb;
@@ -108,11 +130,26 @@ header {
   justify-content: center;
 }
 
+body.dark .container {
+  color: #9ca3af;
+}
+
 .add-form {
   gap: 10px;
   margin-bottom: 40px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+body.dark .input-field {
+  background: #334155;
+  border: 1px solid #334155;
+  color:#e5e7eb;
+}
+
+body.dark .input-field:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 1px rgba(96,165,250,0.6);
 }
 
 .input-field {
@@ -148,6 +185,10 @@ header {
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   min-width: 80px;
+}
+
+body.dark .btn {
+  color: #9ca3af;
 }
 
 .btn:hover:not(:disabled) {
@@ -221,6 +262,10 @@ header {
   box-shadow: 0 6px 16px rgba(14, 34, 158, 0.4);
 }
 
+body.dark .light-grey{
+  background: #16213a;
+}
+
 .light-grey{
   color: #6b7280;
 }
@@ -237,6 +282,7 @@ header {
   gap: 30px;
   text-align: center;
   width: 20rem;
+  margin-bottom: 10px;
 }
 
 span {
@@ -286,6 +332,11 @@ h2 {
   color: #1f2937;
 }
 
+body.dark .exam-option{
+  background: #16213a;
+}
+
+
 .exam-option {
   display: flex;
   align-items: center;
@@ -312,15 +363,9 @@ h2 {
   margin-bottom: 10px;
 }
 
-body.dark {
-  background: #0f172a;
-  color: #e5e7eb;
+body.dark .option-btn{
+  background: #16213a;
 }
-
-body.dark .con-card {
-  background: #1e293b;
-}
-
 
 .option-btn {
   border: 2px solid #e5e7eb;
@@ -407,6 +452,11 @@ body.dark .con-card {
 @media (max-width: 1300px) {
   .container {
     padding: 70px;
+  }
+
+  .con-card  {
+    padding: 25px;
+    border-radius: 12px;
   }
 
 }

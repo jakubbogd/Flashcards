@@ -63,4 +63,21 @@ import HomeCard from './Subcomponents/HomeCard.vue'
 .settings {
   background: linear-gradient(135deg, #37a418, #ade571);
 }
+
+body.dark .sets {
+  background: linear-gradient(135deg, #6d28d9, #166534);
+}
+
+body.dark .exam {
+  background: linear-gradient(135deg, #166534, #1e3a8a);
+}
+
+body.dark .slearn {
+  background: linear-gradient(135deg, #1e3a8a, #15803d);
+}
+
+body.dark .settings {
+  background: linear-gradient(135deg, #15803d, #4d7c0f);
+}
+
 </style>

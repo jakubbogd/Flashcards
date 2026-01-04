@@ -40,6 +40,10 @@ const progressColor = computed(() => {
   align-items: center;
 }
 
+body.dark .progress-bar{
+  background: #16213a;
+}
+
 .progress-bar {
   width: min(100%, 400px);
   height: 25px;

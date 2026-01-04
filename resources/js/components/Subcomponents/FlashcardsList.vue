@@ -21,20 +21,30 @@
           <button class="delete" @click="openModal(card.id)">✕</button>
           <span v-if="savingId.value === card.id" class="saving">zapisywanie…</span>
         </div>
+
         <div class="wrong-answers" v-if="!card.question.startsWith('Czy ')">
-          <p class="wrong-answers-title">Błędne odpowiedzi</p>
-          <div v-for="option in card.options.filter(o => !o.is_correct)" :key="option.id" class="wrong-answer-row">
-            <textarea v-model="option.text" class="wrong-answer-input blue-border-input" placeholder="Błędna odpowiedź" @blur="updateWrongAnswer(option)" @input="autoGrow($event)"/>
-            <span v-if="savingWrongId === option.id" class="saving-inline">
-              zapisywanie…
+          <div class="wrong-answers-header" @click="toggleWrongAnswers(card.id)">
+            <p class="wrong-answers-title">Błędne odpowiedzi</p>
+            <span class="arrow" :class="{ open: wrongAnswersOpen[card.id] }">
+              ▶
             </span>
           </div>
-          <div v-if="card.options.length < 4" class="add-wrong-answer">
-            <textarea v-model="newWrongAnswers[card.id]" class="wrong-answer-input blue-border-input" placeholder="Dodaj błędną odpowiedź (max 3)" @input="autoGrow($event)" />
-            <button class="btn blue-btn small" @click="addWrongAnswer(card)" :disabled="!newWrongAnswers[card.id]?.trim()">
-              ➕ Dodaj błędną odpowiedź
-            </button>
-          </div>
+          <transition name="fade-slide">
+            <div v-show="wrongAnswersOpen[card.id]">
+              <div v-for="option in card.options.filter(o => !o.is_correct)" :key="option.id" class="wrong-answer-row">
+                <textarea v-model="option.text" class="wrong-answer-input blue-border-input" placeholder="Błędna odpowiedź" @blur="updateWrongAnswer(option)" @input="autoGrow($event)"/>
+                <span v-if="savingWrongId === option.id" class="saving-inline">
+                  zapisywanie…
+                </span>
+              </div>
+              <div v-if="card.options.length < 4" class="add-wrong-answer">
+                <textarea v-model="newWrongAnswers[card.id]" class="wrong-answer-input blue-border-input" placeholder="Dodaj błędną odpowiedź (max 3)" @input="autoGrow($event)" />
+                <button class="btn blue-btn small" @click="addWrongAnswer(card)" :disabled="!newWrongAnswers[card.id]?.trim()">
+                  ➕ Dodaj błędną odpowiedź
+                </button>
+              </div>
+            </div>
+          </transition>
         </div>
       </div>
     </transition-group>
@@ -55,12 +65,17 @@ defineProps({
 
 const emit = defineEmits(['reload'])
 
+const wrongAnswersOpen = ref({})
 const updateImage = ref(null)
 const savingId = ref(0)
 const newWrongAnswers = ref({})
 const savingWrongId = ref(null)
 const show = ref(false)
 const toDelete = ref(0)
+
+const toggleWrongAnswers = (cardId) => {
+  wrongAnswersOpen.value[cardId] = !wrongAnswersOpen.value[cardId]
+}
 
 
 const addWrongAnswer = async (card) => {
@@ -228,6 +243,43 @@ const autoGrow = (event) => {
 .delete:hover {
   color: #dc2626;
   transform: scale(1.2);
+}
+
+.wrong-answers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.arrow {
+  font-size: 0.9rem;
+  transition: transform 0.25s ease;
+}
+
+.arrow.open {
+  transform: rotate(90deg);
+}
+
+/* animacja rozwijania */
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: all 0.25s ease;
+}
+
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+body.dark .item {
+  background: #16213a;
+}
+
+body.dark .wrong-answers {
+  background: #16213a;
 }
 
 .item {
