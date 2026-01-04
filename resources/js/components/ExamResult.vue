@@ -76,7 +76,7 @@ onMounted(async () => {
 .score {
   font-size: 1.2rem;
   margin-bottom: 28px;
-  color: #374151;
+ 
 }
 
 .score strong {

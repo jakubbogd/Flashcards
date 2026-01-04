@@ -85,28 +85,25 @@ const timerClass = computed(() => {
   margin-top: 20px;
 }
 
+body.dark .exam-timer{
+  background: #16213a;
+}
+
 .exam-timer {
   position: fixed;
   top: 20px;
   right: 20px;
-
   display: flex;
   align-items: center;
   gap: 10px;
-
   padding: 12px 20px;
   border-radius: 16px;
-
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-
   background: #f9fafb;
   color: #111827;
-
-  box-shadow:
-    0 10px 25px rgba(0, 0, 0, 0.1);
-
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   z-index: 100;
 }
