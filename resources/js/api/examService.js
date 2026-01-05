@@ -11,11 +11,8 @@ export const examService = {
     return data;
   },
 
-  async startExam(set_ids, difficulty) {
-    const { data } = await apiClient.post('/exams/start', {
-      set_ids: set_ids,
-      difficulty: difficulty
-    }); 
+  async startExam(form) {
+    const { data } = await apiClient.post('/exams/start', form);
     return data;
   },
 

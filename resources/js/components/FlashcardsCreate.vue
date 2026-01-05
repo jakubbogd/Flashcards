@@ -9,9 +9,9 @@
     <CSVUpload :set="set"/>
 
     <Form @add="add">
-      <textarea v-model="newQuestion" placeholder="Pytanie" class="blue-border-input" ref="newQuestionEl" />
-      <textarea v-model="newAnswer" placeholder="Odpowiedź" class="blue-border-input" ref="newAnswerEl" />
-      <textarea v-model="newNotes" placeholder="Dodatkowe notatki" class="blue-border-input" ref="newNotesEl"/>
+      <textarea v-model="form.question" placeholder="Pytanie" class="blue-border-input" ref="newQuestionEl" />
+      <textarea v-model="form.answer" placeholder="Odpowiedź" class="blue-border-input" ref="newAnswerEl" />
+      <textarea v-model="form.notes" placeholder="Dodatkowe notatki" class="blue-border-input" ref="newNotesEl"/>
       <input type="file" @change="onFileChange" accept="image/*" />
       <button @click="add" type="submit" class="btn blue-btn" :disabled="loading">
         <span>➕</span> Dodaj
@@ -42,7 +42,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted,reactive } from 'vue'
 import { hierarchyService } from '@/api/hierarchyService'
 import { flashcardService } from '@/api/flashcardService'
 import CSVUpload from './Subcomponents/CSVUpload.vue'
@@ -57,20 +57,30 @@ import { goTo } from '@/helpers/helpers'
 const set = ref([])
 const selectedSetId = ref(0)
 const flashcards = ref([])
-const newQuestion = ref('')
-const newAnswer = ref('')
-const newNotes = ref('')
 const showToast = ref(false)
 const loading = ref(false)
 const newQuestionEl = ref(null)
 const newAnswerEl = ref(null)
 const newNotesEl= ref(null)
-const newImage = ref(null)
 const previewImage = ref(null)
 
 const closeImage = () => {
   previewImage.value = null
   document.body.style.overflow = ''
+}
+
+const form = reactive({
+  question: '',
+  answer: '',
+  notes: '',
+  image: null
+})
+
+function resetForm() {
+  form.question = ''
+  form.answer = ''
+  form.notes = ''
+  form.image = null
 }
 
 
@@ -97,23 +107,20 @@ const load = async () => {
 }
 
 const onFileChange = (e) => {
-  newImage.value = e.target.files[0]
+  form.image = e.target.files[0]
 }
 
 const add = async () => {
-  if (!newQuestion.value.trim() || !newAnswer.value.trim()) return
+  if (!form.question.trim() || !form.answer.trim()) return
   loading.value = true
   try {
-    const res = await flashcardService.addFlashcards(selectedSetId.value, newQuestion.value, newAnswer.value, newNotes.value, selectedSetId.value, newImage.value)
+    const res = await flashcardService.addFlashcards(selectedSetId.value,form)
     flashcards.value.unshift(res)
   } catch (error) {
     console.error(error)
   } finally {
     loading.value = false
-    newQuestion.value = ''
-    newAnswer.value = ''
-    newNotes.value = ''
-    newImage.value =null
+    resetForm()
     autoGrowTextarea(newQuestionEl.value)
     autoGrowTextarea(newAnswerEl.value)
     autoGrowTextarea(newNotesEl.value)

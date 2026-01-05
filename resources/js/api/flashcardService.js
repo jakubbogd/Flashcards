@@ -6,14 +6,8 @@ export const flashcardService = {
     return data;
   },
 
-  async addFlashcards(set_id, question, answer, notes, set, image) {
-    const { data } = await apiClient.post(`/${set_id}/flashcards`, {
-      question: question.trim(),
-      answer: answer.trim(),
-      notes: notes.trim(),
-      set: set,
-      image: image
-    }, {
+  async addFlashcards(set_id, form) {
+    const { data } = await apiClient.post(`/${set_id}/flashcards`, form,{
       headers: {'Content-Type': 'multipart/form-data'}})
     return data;
   },

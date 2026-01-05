@@ -15,16 +15,11 @@ export const hierarchyService = {
     const { data } = await apiClient.post(`/folders`, {
       name: name.trim()
     }); 
-    console.log(data)
     return data;
   },
 
-  async addSet(name,description,folder_id) {
-    const { data } = await apiClient.post(`/sets`, {
-      name: name.trim(),
-      description: description.trim(),
-      folder_id: folder_id
-    }); 
+  async addSet(form) {
+    const { data } = await apiClient.post(`/sets`, form);
     return data;
   },
 

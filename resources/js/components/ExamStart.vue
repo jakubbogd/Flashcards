@@ -22,7 +22,7 @@
           >
             <input
               type="checkbox"
-              v-model="selectedSets"
+              v-model="form.set_ids"
               :value="set.id"
               :disabled="set.flashcards_count === 0"
             />
@@ -43,8 +43,8 @@
             :key="level.value"
             type="button"
             class="mode-btn btn difficulty-option"
-            :class="{ active: difficulty === level.value }"
-            @click="difficulty = level.value" aria-pressed
+            :class="{ active: form.difficulty === level.value }"
+            @click="form.difficulty = level.value" aria-pressed
           >
             <span class="icon">{{ level.icon }}</span>
             <span class="label">{{ level.label }}</span>
@@ -54,7 +54,7 @@
 
       <button
         class="btn blue-btn"
-        :disabled="loading || selectedSets.length === 0"
+        :disabled="loading || form.set_ids.length === 0"
         @click="startExam"
       >
         🚀 Rozpocznij egzamin
@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, reactive } from 'vue'
 import GoToMain from './Subcomponents/GoToMain.vue'
 import { examService } from '@/api/examService'
 import { hierarchyService } from '@/api/hierarchyService'
@@ -72,8 +72,6 @@ import { goTo } from '@/helpers/helpers'
 
 
 const folders = ref([])
-const selectedSets = ref([])
-const difficulty = ref('normal')
 const loading = ref(false)
 
 const difficulties = [
@@ -81,19 +79,23 @@ const difficulties = [
   { value: 'normal', label: 'Normalny', icon: '😐' },
   { value: 'hard', label: 'Trudny', icon: '🔥' }
 ]
+const form = reactive({
+  set_ids: [],
+  difficulty: 'normal',
+})
 
 onMounted(async () => {
   folders.value = await hierarchyService.getFolders()
 })
 
 const startExam = async () => {
-  if (selectedSets.value.length === 0) {
+  if (form.set_ids.length === 0) {
     return
   }
 
   loading.value = true
   try {
-    const uuid = await examService.startExam(selectedSets.value, difficulty.value)
+    const uuid = await examService.startExam(form)
     goTo(`exam/${uuid.uuid}`)
   } catch (error) {
     console.error(error)

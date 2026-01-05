@@ -54,7 +54,7 @@
 <script setup>
 import DeleteModal from './DeleteModal.vue'
 import { flashcardService } from '@/api/flashcardService'
-import { ref } from 'vue'
+import { ref,reactive } from 'vue'
 
 defineProps({
   flashcards: {

@@ -19,11 +19,9 @@ const submit = async () => {
  
 
   try {
-     let a =await axios.post('/login', form)
+  await axios.post('/login', form)
    window.location.href = '/'
   } catch (e) {
-    console.log
-    
       errors.value = e.response.data.errors
     
   } finally {

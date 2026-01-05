@@ -8,8 +8,8 @@
     </header>
 
     <Form v-if="open" @add="addSet">
-      <input v-model="newSetName" placeholder="Nazwa zestawu" class="input-field" required />
-      <input v-model="newSetDescription" placeholder="Opis (opcjonalnie)" class="input-field" />
+      <input v-model="form.name" placeholder="Nazwa zestawu" class="input-field" required />
+      <input v-model="form.description" placeholder="Opis (opcjonalnie)" class="input-field" />
       <button type="submit" class="btn blue-btn" @click="addSet">Dodaj zestaw</button>
     </Form>
 
@@ -27,12 +27,23 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref,reactive } from 'vue'
 import Toast from './Toast.vue'
 import SetCard from './SetCard.vue'
 import Form from './/Form.vue'
 import { hierarchyService } from '@/api/hierarchyService'
 
+const form = reactive({
+  name:'',
+  description: '',
+  folder_id: props.folder.id
+})
+
+const resetForm =() => {
+  form.name=''
+  form.description=''
+  form.folder_id=props.folder.id
+}
 
 const emit = defineEmits(['loadSets'])
 const props = defineProps({
@@ -41,16 +52,14 @@ const props = defineProps({
 })
 const showToast = ref(false)
 const savingId = ref(null)
-const newSetName = ref('')
-const newSetDescription = ref('')
+
 const open = ref(true)
 const toggle = () => (open.value = !open.value)
 const addSet = async () => {
-  if (!newSetName.value.trim()) return
+  if (!form.name.trim()) return
   try {
-    await hierarchyService.addSet(newSetName.value,newSetDescription.value,props.folder.id)
-    newSetName.value = ''
-    newSetDescription.value = ''
+    await hierarchyService.addSet(form)
+    resetForm()
     emit('loadSets')
   } catch (error) {
     console.error(error)
