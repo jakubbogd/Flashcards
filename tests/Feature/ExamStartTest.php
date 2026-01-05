@@ -17,7 +17,7 @@ class ExamStartTest extends TestCase
         $set = Set::factory()->create(['name' => 'test1']);
         Flashcard::factory()->count(15)->create(['set_id' => $set->id]);
 
-        $response = $this->postJson('/api/exams/start', [
+        $response = $this->postJson('/exams/start', [
             'set_ids' => [$set->id],
             'difficulty' => 'easy',
         ]);
@@ -34,7 +34,7 @@ class ExamStartTest extends TestCase
     #[Test]
     public function test_exam_start_validation()
     {
-        $response = $this->postJson('/api/exams/start', []);
+        $response = $this->postJson('/exams/start', []);
 
         $response->assertStatus(422);
     }

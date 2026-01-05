@@ -17,7 +17,7 @@ class ApiContractExamTest extends TestCase
         $set = Set::factory()->create(['name' => 'A']);
         Flashcard::factory()->count(20)->create(['set_id' => $set->id]);
 
-        $start = $this->postJson('/api/exams/start', [
+        $start = $this->postJson('/exams/start', [
             'set_ids' => [$set->id],
             'difficulty' => 'easy',
         ]);
@@ -27,7 +27,7 @@ class ApiContractExamTest extends TestCase
 
         $uuid = $start->json('uuid');
 
-        $show = $this->getJson("/api/exams/{$uuid}");
+        $show = $this->getJson("/exams/{$uuid}");
 
         $show->assertStatus(200)
             ->assertJsonStructure([

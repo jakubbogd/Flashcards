@@ -13,6 +13,7 @@ class SmartLearnSession extends Model
         'total',
         'started_at',
         'finished_at',
+        'user_id'
     ];
 
     protected $casts = [
@@ -23,5 +24,10 @@ class SmartLearnSession extends Model
     public function questions()
     {
         return $this->hasMany(SmartLearnQuestion::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

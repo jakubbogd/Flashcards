@@ -15,6 +15,7 @@ export const hierarchyService = {
     const { data } = await apiClient.post(`/folders`, {
       name: name.trim()
     }); 
+    console.log(data)
     return data;
   },
 

@@ -33,12 +33,16 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
         });
 
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->boolean('dark_mode')->default(false);
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
             $table->timestamps();
         });
 
@@ -47,6 +51,10 @@ return new class extends Migration
             $table->id();
             $table->date('date')->unique();
             $table->timestamps();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
         });
     }
 

@@ -6,6 +6,7 @@ use App\Http\Requests\StartExamRequest;
 use App\Http\Requests\AnswerExamRequest;
 use App\Models\Exam;
 use App\Services\ExamService;
+use Illuminate\Support\Facades\Auth;
 use App\Services\StreakService;
 use App\Services\MotivationService;
 
@@ -89,7 +90,7 @@ class ExamController extends Controller
 
     public function index()
     {
-        return Exam::latest()
+        return Exam::where('user_id', Auth::id())->latest()
             ->withCount([
                 'questions as correct_answers' => fn ($q) =>
                     $q->where('is_correct', true)

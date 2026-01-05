@@ -51,4 +51,23 @@ class User extends Authenticatable
         return $this->hasOne(Settings::class);
     }
 
+    public function studyDays()
+    {
+        return $this->hasMany(StudyDay::class);
+    }
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
+    }
+
+     protected static function booted(): void
+    {
+        static::deleting(function (User $user) {
+            $user->folders()->delete();
+            $user->studyDays()->delete();
+            $user->settings->delete();
+        });
+    }
+
 }

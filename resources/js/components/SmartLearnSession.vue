@@ -106,7 +106,6 @@ let mode = 'multiple_choice'
 const load = async () => {
   session.value = await smartLearnService.getSession(uuid)
   total.value = session.value.total
-  console.log(session.value.questions)
   current.value = session.value.questions.find(q => !q.answered_at) || null
   mode = rand()
   selectedOptionId.value = null

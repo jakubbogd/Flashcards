@@ -1,11 +1,18 @@
 <template>
 
-<form @submit.prevent="add" @keyup.enter="emit('add')" class="add-form flex">
+<form @keyup.enter="emit('add')" class="add-form" :class="{ 'flex': flex }">
    <slot />
 </form>
 
 </template> 
 
 <script setup>
-    const emit=defineEmits(['add']);
+defineProps({
+  flex: {
+    type: Boolean,
+    default: true
+  }
+})
+
+const emit=defineEmits(['add']);
 </script>

@@ -27,7 +27,7 @@ class ExamAnswerTest extends TestCase
         $question = $questions->first();
 
         // Wywołanie endpointu odpowiedzi
-        $response = $this->postJson("/api/exams/{$exam->uuid}/answer/{$question->order}", [
+        $response = $this->postJson("/exams/{$exam->uuid}/answer/{$question->order}", [
             'is_correct' => true,
         ]);
 

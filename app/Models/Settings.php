@@ -9,9 +9,14 @@ class Settings extends Model
 {
     use HasFactory;
     
-    protected $fillable = ['dark_mode'];
+    protected $fillable = ['dark_mode', 'user_id'];
 
     protected $casts = [
         'dark_mode' => 'boolean',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

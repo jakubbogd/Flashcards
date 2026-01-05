@@ -38,7 +38,7 @@ class ExamTest extends TestCase
             'time_limit' => 1200,
         ]);
 
-        $response = $this->getJson("/api/exams/{$exam->uuid}");
+        $response = $this->getJson("/exams/{$exam->uuid}");
 
         $response->assertStatus(200)
                  ->assertJson([
@@ -56,7 +56,7 @@ class ExamTest extends TestCase
     #[Test]
     public function it_returns_404_for_nonexistent_uuid()
     {
-        $response = $this->getJson("/api/exams/nonexistent-uuid");
+        $response = $this->getJson("/exams/nonexistent-uuid");
         $response->assertStatus(404);
     }
 
@@ -101,7 +101,7 @@ class ExamTest extends TestCase
             ]);
         }
 
-        $response = $this->getJson("/api/exams/{$exam->uuid}");
+        $response = $this->getJson("/exams/{$exam->uuid}");
         $response->assertStatus(200)
                 ->assertJsonStructure(['uuid', 'sets', 'difficulty', 'total', 'time_limit', 'percent']);
     }

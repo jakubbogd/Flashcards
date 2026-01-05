@@ -46,6 +46,6 @@ onMounted(async () => {
 
 const start = async () => {
   const uuid = await smartLearnService.startSession(selected.value, count.value)
-  goTo(`smart-learn/${uuid.uuid}`)
+  goTo(`seesmart-learn/${uuid.uuid}`)
 }
 </script>

@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: '/api',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  baseURL: '/',
+  //headers: {
+    //'Content-Type': 'application/json',
+  //},
 });
 
 apiClient.interceptors.response.use(

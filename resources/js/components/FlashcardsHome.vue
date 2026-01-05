@@ -1,46 +1,85 @@
 <template>
- 
-<nav class="home-grid grid">
-  <HomeCard
-    class="sets"
-    href="/sets"
-    icon="📦"
-    title="Zestawy fiszek"
-    description="Twórz fiszki oraz ucz się pojedynczych zestawów"
-  />
-  <HomeCard
-  class="exam"
-    href="/exam"
-    icon="✏️"
-    title="Egzamin z fiszek"
-    description="Sprawdź, czy potrafisz"
-  />
+ <div>
+  <div class="user-bar">
+      <span>Witaj, {{ user.name }}!</span>
+      <form method="POST" action="/logout">
+        <input type="hidden" name="_token" :value="csrf">
+        <button type="submit">Wyloguj</button>
+      </form>
+    </div>
 
-  <HomeCard
-  class="slearn"
-    href="/smart-learn"
-    icon="🧠"
-    title="Ucz się!"
-    description="Ucz się efektywnie"
-  />
+  <nav class="home-grid grid">
+    <HomeCard
+      class="sets"
+      href="/seesets"
+      icon="📦"
+      title="Zestawy fiszek"
+      description="Twórz fiszki oraz ucz się pojedynczych zestawów"
+    />
+    <HomeCard
+    class="exam"
+      href="/exam"
+      icon="✏️"
+      title="Egzamin z fiszek"
+      description="Sprawdź, czy potrafisz"
+    />
 
-  <HomeCard
-  class="settings"
-    href="/settings"
-    icon="🧠"
-    title="Ustawienia!"
-    description="Dostosuj aplikację pod siebie"
-  />
+    <HomeCard
+    class="slearn"
+      href="/seesmart-learn"
+      icon="🧠"
+      title="Ucz się!"
+      description="Ucz się efektywnie"
+    />
 
-</nav>
+    <HomeCard
+    class="settings"
+      href="/seesettings"
+      icon="🧠"
+      title="Ustawienia!"
+      description="Dostosuj aplikację pod siebie"
+    />
 
+  </nav>
+ </div>
 </template>
 
 <script setup>
 import HomeCard from './Subcomponents/HomeCard.vue'
+
+const user = window.Laravel.user
+
+
+const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+
 </script>
 
 <style scoped>
+  .user-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 12px;
+}
+
+.user-bar span {
+  font-weight: 500;
+}
+
+.user-bar button {
+  padding: 0.4rem 0.8rem;
+  background-color: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-bar button:hover {
+  background-color: #3730a3;
+}
+
 .home-grid {
   max-width: 1000px;
   margin: 60px auto;

@@ -3,20 +3,22 @@ namespace App\Services;
 
 use App\Models\StudyDay;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class StreakService
 {
     public function markToday(?\DateTimeInterface $date = null): void
     {
         $date = $date ? Carbon::parse($date)->toDateString() : now()->toDateString();
-        if (!StudyDay::where('date', $date)->exists()) {
-            StudyDay::create(['date' => $date]);
+        if (!StudyDay::where('date', $date)->where('user_id', Auth::id())->exists()) {
+            StudyDay::create(['date' => $date, 'user_id'=> Auth::id()]);
         }
     }
 
     public function current(): int
     {
-        $dates = StudyDay::orderByDesc('date')
+        $dates = StudyDay::where('user_id', Auth::id())
+            ->orderByDesc('date')
             ->pluck('date')
             ->toArray();
 

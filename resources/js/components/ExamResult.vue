@@ -14,7 +14,7 @@
   <Toast :showToast="showToast" :text="exam.message" />
     <p>🔥 Streak: {{ exam.streak }} dni</p>
 
-  <button class="btn blue-btn" @click="goTo('exams')">
+  <button class="btn blue-btn" @click="goTo('seeexams')">
     📜 Historia egzaminów
     </button>
     <button class="blue-btn btn" @click="goTo()">🏠 Menu</button>

@@ -22,6 +22,7 @@ class Flashcard extends Model
     {
         return $this->hasMany(FlashcardOption::class);
     }
+    
     public function set()
     {
         return $this->belongsTo(Set::class, 'set_id');

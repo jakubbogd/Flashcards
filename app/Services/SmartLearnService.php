@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Flashcard;
 use App\Models\SmartLearnSession;
+use Illuminate\Support\Facades\Auth;
 use App\Models\SmartLearnQuestion;
 use Illuminate\Support\Str;
 
@@ -49,6 +50,7 @@ class SmartLearnService
             'uuid' => (string) Str::uuid(),
             'total' => count($selected),
             'started_at' => now(),
+            'user_id' => Auth::id(),
         ]);
 
         foreach ($selected as $index => $flashcard) {

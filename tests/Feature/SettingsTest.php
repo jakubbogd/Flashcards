@@ -16,7 +16,7 @@ class SettingsTest extends TestCase
     {
         Settings::firstOrCreate([]);
 
-        $response = $this->getJson('/api/settings');
+        $response = $this->getJson('/settings');
 
         $response->assertStatus(200)
                  ->assertJsonStructure([
@@ -30,7 +30,7 @@ class SettingsTest extends TestCase
     #[Test]
     public function test_it_updates_dark_mode()
     {
-        $response = $this->putJson('/api/settings', [
+        $response = $this->putJson('/settings', [
             'dark_mode' => true,
         ]);
 
@@ -47,7 +47,7 @@ class SettingsTest extends TestCase
     #[Test]
     public function test_dark_mode_is_required()
     {
-        $response = $this->putJson('/api/settings', []);
+        $response = $this->putJson('/settings', []);
 
         $response->assertStatus(422);
     }

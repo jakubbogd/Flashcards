@@ -43,7 +43,6 @@ export const flashcardService = {
   async import(id,file) {
     const form = new FormData()
     form.append('file', file)
-  
     const { data } = await apiClient.post(`/${id}/flashcards/import`, form)
     return data;
   },

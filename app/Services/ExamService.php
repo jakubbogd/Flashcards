@@ -7,6 +7,7 @@ use App\Models\Flashcard;
 use App\Models\Set;
 use App\Models\ExamQuestion;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ExamService
 {
@@ -41,6 +42,7 @@ class ExamService
             'time_limit' => $config['time'],
             'started_at' => now(),
             'sets' => $sets,
+            'user_id' => Auth::id(),
         ]);
 
         foreach ($selected as $index => $flashcard) {

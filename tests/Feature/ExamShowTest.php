@@ -33,7 +33,7 @@ class ExamShowTest extends TestCase
             ]);
         }
 
-        $response = $this->getJson("/api/exams/{$exam->uuid}");
+        $response = $this->getJson("/exams/{$exam->uuid}");
 
         $response->assertStatus(200)
             ->assertJsonStructure([

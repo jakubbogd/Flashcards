@@ -11,12 +11,21 @@ import ExamHistory from './components/ExamHistory.vue'
 import SmartLearnStart from './components/SmartLearnStart.vue'
 import SmartLearnSession from './components/SmartLearnSession.vue'
 import Settings from './components/Settings.vue'
+import Login from './components/Login.vue'
+import Register from './components/Register.vue'
 import '../css/global.css'
 
 const el = document.getElementById('app')
 if (el) {
     const page = el.dataset.page
 
+    if (page === 'login') {
+        createApp(Login).mount('#app')
+    }
+
+    if (page === 'register') {
+        createApp(Register).mount('#app')
+    }
 
     if (page === 'create') {
         createApp(FlashcardsCreate).mount('#app')

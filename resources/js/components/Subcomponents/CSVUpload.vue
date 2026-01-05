@@ -1,28 +1,39 @@
 <template>
-     <div class="con-card"  :class="{ active: isDragging }"  @dragover.prevent="isDragging = true"  @dragleave.prevent="isDragging = false"  @drop.prevent="onDrop">
-      <input type="file" ref="fileInput" accept=".csv" class="hidden" @change="onFile"/>
-      <div class="pointer" @click="triggerFile">
-        <div class="icon">📄</div>
+    <div class="con-card">
+  <input
+    type="file"
+    ref="fileInput"
+    accept=".csv"
+    class="hidden"
+    @change="onFile"
+  />
 
-        <p v-if="!file" class="light-grey">
-          Przeciągnij plik CSV tutaj<br />
-          <span>lub kliknij, aby wybrać</span>
-        </p>
+  <div class="pointer" @click="triggerFile">
+    <div class="icon">📄</div>
 
-        <p v-else class="file light-grey">
-          {{ file.name }}
-        </p>
-      </div>
+    <p v-if="!file" class="light-grey">
+      Kliknij, aby wybrać plik CSV
+    </p>
 
-      <button class="btn blue-btn" :disabled="!file || loading" @click.stop="uploadCSV">
-        <span v-if="!loading">⬆ Importuj</span>
-        <span v-else>⏳ Importuję…</span>
-      </button>
+    <p v-else class="file light-grey">
+      {{ file.name }}
+    </p>
+  </div>
 
-      <div v-if="loading" class="progress">
-        <div class="bar" :style="{ width: progress + '%' }"></div>
-      </div>
-    </div>
+  <button
+    class="btn blue-btn"
+    :disabled="!file || loading"
+    @click="uploadCSV"
+  >
+    <span v-if="!loading">⬆ Importuj</span>
+    <span v-else>⏳ Importuję…</span>
+  </button>
+
+  <div v-if="loading" class="progress">
+    <div class="bar" :style="{ width: progress + '%' }"></div>
+  </div>
+</div>
+
 </template>
 
 <script setup>

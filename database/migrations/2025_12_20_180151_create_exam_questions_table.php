@@ -21,6 +21,10 @@ return new class extends Migration
             $table->timestamp('started_at')->nullable();
             $table->integer('time_limit');
             $table->timestamp('finished_at')->nullable();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
         });
 
         Schema::create('exam_questions', function (Blueprint $table) {
@@ -41,6 +45,10 @@ return new class extends Migration
             $table->timestamp('started_at')->nullable();
             $table->timestamp('finished_at')->nullable();
             $table->timestamps();
+            $table->foreignId('user_id')
+                ->nullable()
+                ->constrained()
+                ->nullOnDelete();
         });
         Schema::create('smart_learn_questions', function (Blueprint $table) {
             $table->id();

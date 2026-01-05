@@ -17,7 +17,7 @@ class FlashcardsTest extends TestCase
     {
         $set = Set::factory()->create();
 
-        $response = $this->postJson("/api/{$set->id}/flashcards", [
+        $response = $this->postJson("/{$set->id}/flashcards", [
             'question' => 'What is PHP?',
             'answer' => 'Programming language',
         ]);
@@ -35,7 +35,7 @@ class FlashcardsTest extends TestCase
     {
         $card = Flashcard::factory()->create();
 
-        $this->putJson("/api/{$card->set_id}/flashcards/{$card->id}", [
+        $this->putJson("/{$card->set_id}/flashcards/{$card->id}", [
             'question' => 'Updated?',
             'answer' => 'Yes',
         ])->assertOk();
@@ -51,7 +51,7 @@ class FlashcardsTest extends TestCase
     {
         $card = Flashcard::factory()->create();
 
-        $this->deleteJson("/api/{$card->set_id}/flashcards/{$card->id}")
+        $this->deleteJson("/{$card->set_id}/flashcards/{$card->id}")
             ->assertStatus(204);
 
         $this->assertDatabaseMissing('flashcards', [
@@ -66,7 +66,7 @@ class FlashcardsTest extends TestCase
 
         $this->assertFalse($flashcard->learned);
 
-        $response = $this->putJson("/api/flashcards/{$flashcard->id}/learned", [
+        $response = $this->putJson("/flashcards/{$flashcard->id}/learned", [
             'learned' => true,
         ]);
 
@@ -82,7 +82,7 @@ class FlashcardsTest extends TestCase
     {
         $flashcard = Flashcard::factory()->create();
 
-        $response = $this->deleteJson("/api/{$flashcard->set_id}/flashcards/{$flashcard->id}");
+        $response = $this->deleteJson("/{$flashcard->set_id}/flashcards/{$flashcard->id}");
         $response->assertStatus(204);
 
         $this->assertDatabaseMissing('flashcards', ['id' => $flashcard->id]);

@@ -19,7 +19,8 @@ class Exam extends Model
         'sets',
         'last_seen_at',
         'times_shown',
-        'times_correct'
+        'times_correct',
+        'user_id'
     ];
 
     protected $casts = [
@@ -28,6 +29,11 @@ class Exam extends Model
         'last_seen_at'=>'datetime'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+    
     public function questions()
     {
         return $this->hasMany(ExamQuestion::class)->orderBy('order');
