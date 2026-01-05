@@ -32,7 +32,10 @@ import Toast from './Toast.vue'
 import SetCard from './SetCard.vue'
 import Form from './/Form.vue'
 import { hierarchyService } from '@/api/hierarchyService'
-
+const props = defineProps({
+  folder: Object,
+  sets: Array,
+})
 const form = reactive({
   name:'',
   description: '',
@@ -46,10 +49,7 @@ const resetForm =() => {
 }
 
 const emit = defineEmits(['loadSets'])
-const props = defineProps({
-  folder: Object,
-  sets: Array,
-})
+
 const showToast = ref(false)
 const savingId = ref(null)
 
