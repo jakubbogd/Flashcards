@@ -25,7 +25,7 @@
     <Lack v-if="flashcards.length === 0" />
 
     <Toast :showToast="showToast" />
-    <FlashcardsList :flashcards="flashcards" @reload="load()"/>
+    <FlashcardsList :flashcards="flashcards" @reload="load()" :selectedSetId="selectedSetId"/>
    
     <transition name="fade">
       <div v-if="previewImage" class="lightbox" @click="closeImage">

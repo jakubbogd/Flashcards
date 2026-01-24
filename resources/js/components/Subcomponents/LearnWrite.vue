@@ -109,12 +109,18 @@ const nextCard = () => {
   border: 1px solid #f43f5e;
 }
 
+.learn-container {
+  justify-items: center;
+}
+
 @media (max-width: 480px) {
-
-
   .feedback {
     font-size: 1rem;
     padding: 10px 12px;
+  }
+
+  .learn-container {
+    padding: 15px;
   }
 }
 </style>

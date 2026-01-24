@@ -1,6 +1,6 @@
 <template>
     <transition-group name="slide" tag="div">
-      <div v-for="card in flashcards" :key="card.id">
+      <div v-for="card in props.flashcards" :key="card.id">
         <div class="item">
           <textarea class="blue-border-input" v-model="card.question" @input="autoGrow($event)" @blur="update(card)"/>
           <textarea class="blue-border-input" v-model="card.answer" @input="autoGrow($event)" @blur="update(card)"/>
@@ -49,16 +49,21 @@
       </div>
     </transition-group>
      <DeleteModal v-if="show" @confirm="remove" @close="closeModal" />
+     <Toast :showToast="showToast" />
 </template>
 
 <script setup>
 import DeleteModal from './DeleteModal.vue'
 import { flashcardService } from '@/api/flashcardService'
-import { ref,reactive } from 'vue'
+import { ref } from 'vue'
+import Toast from './Toast.vue'
 
-defineProps({
+const props=defineProps({
   flashcards: {
     type: Array,
+    required: true
+  },
+  selectedSetId : {
     required: true
   }
 })
@@ -72,6 +77,7 @@ const newWrongAnswers = ref({})
 const savingWrongId = ref(null)
 const show = ref(false)
 const toDelete = ref(0)
+const showToast = ref(false)
 
 const toggleWrongAnswers = (cardId) => {
   wrongAnswersOpen.value[cardId] = !wrongAnswersOpen.value[cardId]
@@ -120,6 +126,7 @@ const updateWrongAnswer = async (option) => {
     )
     showToast.value = true
     setTimeout(() => (showToast.value = false), 1200)
+    emit('reload')
   } catch (error) {
     console.error(error)
   } finally {
@@ -166,9 +173,10 @@ const update = async (card) => {
   if (!card.question.trim() || !card.answer.trim()) return
   savingId.value = card.id
   try {
-    await flashcardService.updateFlashcard(selectedSetId.value, card.id, card.question, card.answer, card.notes? card.notes:'')
+    await flashcardService.updateFlashcard(props.selectedSetId, card.id, card.question, card.answer, card.notes? card.notes:'')
     showToast.value = true
     setTimeout(() => showToast.value = false, 1500)
+    emit('reload')
   } catch (error) {
     console.error(error)
   } finally {

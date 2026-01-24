@@ -43,7 +43,7 @@ class GeminiService
             }
             unset($provider);
         }
-        return 'ff';
+        return '';
     }
 
     private function sendPrompt(string $endpoint, string $key, string $prompt, array &$provider): ?string

@@ -67,10 +67,10 @@ const submit = async () => {
 .errors {
   background-color: #fdd;
   color: #900;
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  border-radius: 5px;
-  font-size: 0.9rem;
+  padding: 12px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
 }
 
 </style>

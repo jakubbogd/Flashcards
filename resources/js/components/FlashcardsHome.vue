@@ -68,11 +68,11 @@ const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('con
 }
 
 .user-bar button {
-  padding: 0.4rem 0.8rem;
+  padding: 8px 12px;
   background-color: #4f46e5;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
 }
 
@@ -82,7 +82,7 @@ const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute('con
 
 .home-grid {
   max-width: 1000px;
-  margin: 60px auto;
+  margin: 64px auto;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
 }
