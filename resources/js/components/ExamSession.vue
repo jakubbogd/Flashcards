@@ -52,10 +52,10 @@ onMounted(async () => {
 
 })
 
-const submitAnswer = async (isCorrect) => {
+const submitAnswer = async (isCorrect, userAnswer = null) => {
   const order = exam.value.questions[index.value].order
 
-  await examService.submitAnswer(uuid,order,isCorrect)
+  await examService.submitAnswer(uuid,order,isCorrect,userAnswer)
 
   if (index.value + 1 < exam.value.questions.length) {
     index.value++

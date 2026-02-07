@@ -12,6 +12,7 @@ class ExamQuestion extends Model
     protected $fillable = [
         'exam_id',
         'flashcard_id',
+        'user_answer',
         'order',
         'is_correct',
         'answered_at',

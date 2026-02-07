@@ -35,7 +35,7 @@ return new class extends Migration
             $table->boolean('is_correct')->nullable();
             $table->timestamp('answered_at')->nullable();
             $table->timestamps();
-
+            $table->string('user_answer')->nullable();
             $table->unique(['exam_id', 'flashcard_id']);
         });
         Schema::create('smart_learn_sessions', function (Blueprint $table) {

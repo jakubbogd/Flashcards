@@ -26,10 +26,11 @@
       <input class="input-field blue-border-input" v-model="text" placeholder="Twoja odpowiedź..." @keyup.enter="answer(text, 0)"/>
       <button class="blue-btn btn" @click="answer(text, 0)">Odpowiedz</button>
       <div v-if="feedbackClass==='wrong'">
-        Poprawna odpowiedź to: {{ current.flashcard.answer }}
+        <p>Poprawna odpowiedź to: {{ current.flashcard.answer }}</p>
+        <button @click="markCorrect" class="btn blue-btn">Moja odpowiedź jest poprawna</button>
       </div>
     </div>
-    
+   
 
     <p>{{ index }} / {{ total }}</p>
      </div>
@@ -53,6 +54,7 @@
               'wrong-answer': !q.is_correct
             }">
               <span v-if="q.is_correct" class="correct-notification">🎉 Twoja odpowiedź była poprawna!</span>
+              <span v-else-if="odps[i][0] === true" class="correct-notification">🎉 Twoja odpowiedź była podobna do oryginalnej:</span>
               <span v-else class="wrong-notification">❌ Niestety, twoja odpowiedź nie była poprawna</span>
             </div>
         <ul v-if="odps[i][1] === 'multiple_choice'">
@@ -137,11 +139,20 @@ const answer = async (optionText, optionId) => {
       index.value++
       showToast.value = false
       await load()
-    }, 5000)
+    }, 7000)
   }
   
 }
 
+const markCorrect = () => {
+  feedbackClass.value = 'correct'
+  odps.value[odps.value.length - 1][0] = true
+  showToast.value = false
+  toastText.value = "Poprawiono odpowiedź!"
+  correctCount.value++
+  toastTheme.value = true
+  showToast.value = true
+}
 
 const correctPercent = computed(() => {
   if (!session.value) return 0

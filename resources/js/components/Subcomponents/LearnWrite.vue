@@ -21,6 +21,7 @@
         {{ feedback }}
       </div>
     </transition>
+    <button v-if="answered && !isCorrect" @click="markCorrect" class="btn blue-btn">Moja odpowiedź jest poprawna</button>
     <button v-if="answered" @click="nextCard" class="btn green-btn">Następna karta</button>
     
   </div>
@@ -61,14 +62,22 @@ const checkAnswer = () => {
   answered.value = true
   isCorrect.value = userAnswer.value.trim().toLowerCase() === currentCard.value.answer.trim().toLowerCase()
   feedback.value = isCorrect.value ? '✅ Poprawnie!' : `❌ Błąd, prawidłowa odpowiedź: ${currentCard.value.answer}`
+  
+}
+
+const markCorrect = () => {
+  if (!answered.value) return
+  isCorrect.value = true
+  feedback.value = '✅ Oznaczono jako poprawne!'
+}
+
+const nextCard = () => {
   if (isCorrect.value) {
     emit('markEasy',currentCard.value.id)
   } else {
     emit('markHard',currentCard.value.id)
   }
-}
 
-const nextCard = () => {
   if (!props.flashcards.length) return
   userAnswer.value = ''
   feedback.value = ''

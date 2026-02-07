@@ -64,6 +64,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/start', [ExamController::class, 'start']);
         Route::get('/{uuid}', [ExamController::class, 'show']);
         Route::post('/{uuid}/answer/{order}', [ExamController::class, 'answer']);
+        Route::post('/{uuid}/mark_correct/{answerId}', [ExamController::class, 'markCorrect']);
     });
 
     Route::get('/exams', [ExamController::class, 'index']);

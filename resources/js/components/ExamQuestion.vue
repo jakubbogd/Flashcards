@@ -51,7 +51,7 @@ const handleTextSubmit = () => {
     userInput.value.trim().toLowerCase() ===
     props.question.flashcard.answer.toLowerCase()
 
-  emit('answered', correct)
+  emit('answered', correct, userInput.value.trim())
   userInput.value=''
 }
 </script>

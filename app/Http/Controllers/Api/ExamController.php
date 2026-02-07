@@ -9,6 +9,7 @@ use App\Services\ExamService;
 use Illuminate\Support\Facades\Auth;
 use App\Services\StreakService;
 use App\Services\MotivationService;
+use Illuminate\Support\Facades\Log;
 
 
 class ExamController extends Controller
@@ -44,7 +45,7 @@ class ExamController extends Controller
         $exam = Exam::where('uuid', $uuid)
             ->with(['questions.flashcard.options'])
             ->firstOrFail();
-
+        Log::info('Exam show', ['exam' => $exam]);
         $this->streak->markToday();
 
         return response()->json([
@@ -78,10 +79,12 @@ class ExamController extends Controller
         
         $data = $request->validate([
             'is_correct' => ['required', 'boolean'],
+            'user_answer' => ['nullable', 'string'],
         ]);
 
         $question->update([
             'is_correct' => $data['is_correct'],
+            'user_answer' => $data['user_answer'],
             'answered_at' => now(),
         ]);
 
@@ -106,5 +109,22 @@ class ExamController extends Controller
                 'finished_at' => $exam->finished_at,
                 'started_at' => $exam->started_at,
             ]);
+    }
+
+    public function markCorrect(string $uuid, int $answerId)
+    {
+        $exam = Exam::where('uuid', $uuid)->firstOrFail();
+
+        $question = $exam->questions()
+            ->where('id', $answerId)
+            ->firstOrFail();
+
+        abort_if($question->is_correct, 409, 'Odpowiedź już jest oznaczona jako poprawna');
+
+        $question->update([
+            'is_correct' => true,
+        ]);
+
+        return response()->json(['ok' => true]);
     }
 }

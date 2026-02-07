@@ -16,10 +16,16 @@ export const examService = {
     return data;
   },
 
-  async submitAnswer(uuid, order, isCorrect) {
+  async submitAnswer(uuid, order, isCorrect, userAnswer = null) {
     const { data } = await apiClient.post(`/exams/${uuid}/answer/${order}`, {
-      is_correct: isCorrect
+      is_correct: isCorrect,
+      user_answer: userAnswer
     });
+    return data;
+  },
+
+  async markAnswerCorrect(uuid, answerId) {
+    const { data } = await apiClient.post(`/exams/${uuid}/mark_correct/${answerId}`);
     return data;
   }
 };

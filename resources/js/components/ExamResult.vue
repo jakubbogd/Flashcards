@@ -30,7 +30,10 @@
         }"
       >
         <p>{{ q.flashcard.question }}</p>
-
+        <div v-if="q.user_answer">
+          <p><strong>Twoja odpowiedź:</strong> {{ q.user_answer }}</p>
+          <button @click="markCorrect(q)" class="btn blue-btn">Moja odpowiedź jest poprawna</button>
+        </div>
         <ul>
           <li
             v-for="opt in q.flashcard.options"
@@ -64,11 +67,19 @@ const uuid = window.location.pathname.split('/')[2]
 const showToast = ref(false)
 
 onMounted(async () => {
-  exam.value = await examService.getExam(uuid)
+  await load()
   showToast.value = true
   setTimeout(() => showToast.value = false, 5000)
 })
 
+const markCorrect = async (q) => {
+  await examService.markAnswerCorrect(uuid,q.id)
+  await load()
+}
+
+const load = async () => {
+  exam.value = await examService.getExam(uuid)
+}
 </script>
 
 <style scoped>
